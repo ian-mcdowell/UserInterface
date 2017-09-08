@@ -52,7 +52,7 @@
 		3CF829351E41430E0075EF2B /* SOCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829341E41430E0075EF2B /* SOCollectionViewCell.swift */; };
 		3CF829371E4143110075EF2B /* SOTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829361E4143110075EF2B /* SOTableViewCell.swift */; };
 		3CF8293A1E41450B0075EF2B /* SOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829391E41450B0075EF2B /* SOViewController.swift */; };
-		3CF8293E1E4147EB0075EF2B /* SOPickerAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF8293D1E4147EB0075EF2B /* SOPickerAlertController.swift */; };
+		3CF8293E1E4147EB0075EF2B /* PickerAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF8293D1E4147EB0075EF2B /* PickerAlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,7 +115,7 @@
 		3CF829341E41430E0075EF2B /* SOCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOCollectionViewCell.swift; sourceTree = "<group>"; };
 		3CF829361E4143110075EF2B /* SOTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOTableViewCell.swift; sourceTree = "<group>"; };
 		3CF829391E41450B0075EF2B /* SOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOViewController.swift; sourceTree = "<group>"; };
-		3CF8293D1E4147EB0075EF2B /* SOPickerAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOPickerAlertController.swift; sourceTree = "<group>"; };
+		3CF8293D1E4147EB0075EF2B /* PickerAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerAlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				3C130A3A1E66342E0052FBD0 /* PropertiesViewController */,
-				3CF8293D1E4147EB0075EF2B /* SOPickerAlertController.swift */,
+				3CF8293D1E4147EB0075EF2B /* PickerAlertController.swift */,
 				3CF829071E4140D90075EF2B /* SONavigationController.swift */,
 				3CF829391E41450B0075EF2B /* SOViewController.swift */,
 				3CF5EE6D1E450F11002E23FF /* SOTabViewController.swift */,
@@ -336,6 +336,7 @@
 					3CF828B81E4138F00075EF2B = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = A8DZBD3K9C;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					3CF828C11E4138F00075EF2B = {
@@ -390,7 +391,7 @@
 				3CF829371E4143110075EF2B /* SOTableViewCell.swift in Sources */,
 				3CF8293A1E41450B0075EF2B /* SOViewController.swift in Sources */,
 				3CF829131E4140D90075EF2B /* UITableView+Custom.swift in Sources */,
-				3CF8293E1E4147EB0075EF2B /* SOPickerAlertController.swift in Sources */,
+				3CF8293E1E4147EB0075EF2B /* PickerAlertController.swift in Sources */,
 				3CF829161E4140D90075EF2B /* UIViewController+ProgressHUD.swift in Sources */,
 				3CF8291B1E41410D0075EF2B /* ZoomTransition.swift in Sources */,
 				3CF829121E4140D90075EF2B /* SONavigationController.swift in Sources */,
@@ -577,7 +578,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.Interface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -597,7 +598,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.Interface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

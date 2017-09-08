@@ -40,8 +40,8 @@ public class SOFullscreenTitleView: UIView {
         textLabel.text = text
         boldTextLabel.text = boldText
 
-        textLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
-        boldTextLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightBold)
+        textLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
+        boldTextLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.bold)
 
         textLabel.adjustsFontSizeToFitWidth = true
         boldTextLabel.adjustsFontSizeToFitWidth = true
@@ -68,10 +68,10 @@ public class SOFullscreenTitleView: UIView {
         underline.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         underline.heightAnchor.constraint(equalToConstant: 1).isActive = true
 
-        self.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        self.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        boldTextLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        self.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        self.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        boldTextLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
     }
 
     public required init?(coder aDecoder: NSCoder) {

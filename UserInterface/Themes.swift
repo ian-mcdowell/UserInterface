@@ -44,10 +44,10 @@ public struct Theme {
         UINavigationBar.appearance().barTintColor = theme.barTintColor
         UINavigationBar.appearance().tintColor = theme.barButtonColor
         UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: theme.barTextColor
+            NSAttributedStringKey.foregroundColor: theme.barTextColor
         ]
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            NSForegroundColorAttributeName: theme.barTextColor
+            NSAttributedStringKey.foregroundColor: theme.barTextColor
         ]
         UINavigationBar.appearance().isTranslucent = false
         

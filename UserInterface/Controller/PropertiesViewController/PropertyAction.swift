@@ -31,7 +31,9 @@ public class PropertyAction {
         self.action = action
     }
     
-    public init(_ block: @escaping () -> Void) {
+    public init(name: String? = nil, block: @escaping () -> Void, icon: UIImage? = nil) {
+        self.name = name
+        self.icon = icon
         self.block = block
     }
     
@@ -39,8 +41,6 @@ public class PropertyAction {
     internal func perform(from propertiesViewController: PropertiesViewController) {
         if let vc = self.destinationViewController {
             let viewController = vc.init()
-            
-            propertiesViewController.willTransitionToViewController(viewController, withProperty: nil)
             propertiesViewController.navigationController?.pushViewController(viewController, animated: true)
         } else if let target = self.target, let action = self.action {
             _ = target.perform(action)
@@ -58,7 +58,7 @@ internal class PropertyActionCell: UITableViewCell {
         self.accessoryType = .disclosureIndicator
         self.selectedBackgroundView = UIView()
         
-        self.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightBold)
+        self.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
     }
     
     required init?(coder aDecoder: NSCoder) {

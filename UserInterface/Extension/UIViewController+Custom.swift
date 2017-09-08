@@ -8,7 +8,7 @@
 
 public extension UIViewController {
 
-    public func close() {
+    @objc public func close() {
         self.closeWithAnimation(true)
     }
 

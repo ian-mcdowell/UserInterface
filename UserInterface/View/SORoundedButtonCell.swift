@@ -140,7 +140,7 @@ open class SORoundedButtonCell: SOCollectionViewCell {
         setImageViewContentModeBasedOnImage()
     }
 
-    func didLongPress() {
+    @objc func didLongPress() {
         if let item = self.item {
             self.delegate?.didLongPressButtonCell(self, item)
         }
@@ -179,7 +179,7 @@ public class SORoundedSquareImageButtonCell: SORoundedButtonCell {
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular)
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
         subtitleLabel.adjustsFontSizeToFitWidth = true
         subtitleLabel.textColor = .white
         subtitleLabel.textAlignment = .center

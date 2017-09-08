@@ -227,7 +227,7 @@ open class SOTabViewController: SOViewController, UINavigationControllerDelegate
     
     // MARK: Long press gesture
     
-    func handleLongPressGesture(gesture: UILongPressGestureRecognizer) {
+    @objc func handleLongPressGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
             
         case .began:
@@ -323,8 +323,8 @@ private class SOTabViewTab: SOCollectionViewCell {
         let closeImg = UIImage(named: "Close", in: Bundle(for: SOTabViewController.self), compatibleWith: self.traitCollection)
         closeButton.setImage(closeImg?.scaled(toSize: CGSize(width: 20, height: 20)), for: UIControlState())
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        closeButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        closeButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        closeButton.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
         closeButton.addTarget(self, action: #selector(SOTabViewTab.closeButtonTapped), for: .touchUpInside)
         
@@ -335,7 +335,7 @@ private class SOTabViewTab: SOCollectionViewCell {
         
         titleView.textAlignment = .left
         titleView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.font = UIFont.systemFont(ofSize: 15, weight: UIFontWeightRegular)
+        titleView.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.regular)
         contentView.addSubview(titleView)
         titleView.leadingAnchor.constraint(equalTo: closeButton.trailingAnchor, constant: 10).isActive = true
         titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true

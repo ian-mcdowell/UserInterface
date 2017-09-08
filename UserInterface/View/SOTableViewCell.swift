@@ -96,7 +96,7 @@ public class SOTableViewCellTextView: SOTableViewCell {
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
+        textView.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         

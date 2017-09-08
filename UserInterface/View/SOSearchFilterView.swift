@@ -210,7 +210,7 @@ private class SOSearchFilterCell: SOCollectionViewCell {
         layer.borderColor = UIColor.lightGray.cgColor
         
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
         label.textAlignment = .center
         label.baselineAdjustment = .alignCenters
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -227,7 +227,7 @@ private class SOSearchFilterCell: SOCollectionViewCell {
     func setOption(_ option: SOSearchFilterViewOption) {
         
         let name = option.id
-        let text = NSMutableAttributedString(string: "\(name): ", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12)])
+        let text = NSMutableAttributedString(string: "\(name): ", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12)])
         
         if let option = option as? SOSearchFilterViewToggleOption {
             isFilled = option.value

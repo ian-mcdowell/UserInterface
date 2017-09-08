@@ -24,7 +24,7 @@ public class SOBorderedActionButton: UIButton {
         setTitleColor(tintColor, for: UIControlState())
         setTitleColor(UIColor.white, for: .highlighted)
 
-        titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightRegular)
+        titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.regular)
 
         layer.cornerRadius = 5
         layer.borderWidth = 1
@@ -34,7 +34,7 @@ public class SOBorderedActionButton: UIButton {
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 20)
 
-        setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
     }
 
     override public var tintColor: UIColor! {

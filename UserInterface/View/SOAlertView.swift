@@ -68,7 +68,7 @@ open class SOAlertView: UIView {
         
     }
     
-    open func actionButtonTapped() {
+    @objc open func actionButtonTapped() {
         
     }
     

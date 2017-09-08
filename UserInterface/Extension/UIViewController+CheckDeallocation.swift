@@ -29,7 +29,7 @@ public extension UIViewController {
         // to wrap a view controller in another view controller (e.g. a stock UINavigationController)
         // and present the wrapping view controller instead.
         if isMovingFromParentViewController || rootParentViewController.isBeingDismissed {
-            let type = type(of: self)
+            let type = Swift.type(of: self)
             let disappearanceSource: String = isMovingFromParentViewController ? "removed from its parent" : "dismissed as part of \(rootParentViewController)"
             
             DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: { [weak self] in

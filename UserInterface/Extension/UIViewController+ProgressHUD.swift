@@ -268,7 +268,7 @@ private class ProgressHUDView: UIView {
             if let type = progressViewType {
                 let viewType = type.viewType()
                 
-                if type(of: progressView) != viewType {
+                if Swift.type(of: progressView) != viewType {
                     self.progressView?.removeFromSuperview()
                     self.progressView = viewType.init()
                 }

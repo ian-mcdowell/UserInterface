@@ -80,7 +80,7 @@ public class AcknowledgementsViewController: SOViewController, UITableViewDataSo
         
         cell.textLabel?.text = acknowledgements[indexPath.section].text
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFontWeightRegular)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 10, weight: UIFont.Weight.regular)
         cell.selectionStyle = .none
         
         return cell

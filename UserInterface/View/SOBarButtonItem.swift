@@ -60,7 +60,7 @@ public class SOBarButtonItem: UIBarButtonItem {
     }
 
     // We respond to taps this way in case the target or action changes after init is called.
-    func buttonTapped() {
+    @objc func buttonTapped() {
         if let action = self.action {
             _ = self.target?.perform(action)
         }

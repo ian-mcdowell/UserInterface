@@ -6,16 +6,7 @@
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
 
-public typealias PropertyUpdaterKey = String
-
-public let PropertyUpdaterKeySelected: PropertyUpdaterKey = "selected"
-public let PropertyUpdaterKeyValue: PropertyUpdaterKey = "value"
-
-public protocol PropertyUpdating: class {
-    func propertyUpdaterValueChanged(updater: AnyObject, key: PropertyUpdaterKey, value: Any?)
-}
-
-open class PropertiesViewController: SOViewController, UITableViewDataSource, UITableViewDelegate, PropertyUpdating {
+open class PropertiesViewController: SOViewController, UITableViewDataSource, UITableViewDelegate {
 
     public var tableView: UITableView
     public var emptyView: UILabel
@@ -38,7 +29,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         didSet {
             for propertySection in properties {
                 for property in propertySection.items {
-                    property.propertyUpdater = self
+                    property._propertiesViewController = self
                 }
             }
 
@@ -51,8 +42,6 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
             }
         }
     }
-
-    public weak var propertyUpdater: PropertyUpdating?
 
     public init() {
         emptyView = UILabel()
@@ -139,7 +128,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
     
     open func willReload() { }
 
-    public func reload() {
+    @objc public func reload() {
         self.reloadWithCompletion(nil)
     }
     
@@ -207,11 +196,10 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         return ""
     }
 
-    open func willTransitionToViewController(_ viewController: UIViewController, withProperty property: Property?) {
-        (viewController as? PropertiesViewController)?.propertyUpdater = self
+    open func propertySelected(_ property: Property) {
     }
-
-    open func propertyUpdaterValueChanged(updater: AnyObject, key: PropertyUpdaterKey, value: Any?) {
+    
+    open func propertyValueChanged(_ property: Property) {
     }
 
     private var keyboardOpen = false

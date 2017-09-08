@@ -74,7 +74,7 @@ public class Property {
     public func activate() {
     }
     
-    internal weak var propertyUpdater: PropertyUpdating?
+    internal weak var _propertiesViewController: PropertiesViewController?
     internal var _value: String?
     internal var _selected: Bool = false
     internal var _currentCell: InternalPropertyCell?
@@ -88,7 +88,7 @@ public class Property {
         
         if _value != value {
             _value = value
-            propertyUpdater?.propertyUpdaterValueChanged(updater: self, key: PropertyUpdaterKeyValue, value: value)
+            _propertiesViewController?.propertyValueChanged(self)
         }
     }
     
@@ -108,7 +108,7 @@ public class Property {
         
         if _selected != selected {
             _selected = selected
-            propertyUpdater?.propertyUpdaterValueChanged(updater: self, key: PropertyUpdaterKeySelected, value: selected)
+            _propertiesViewController?.propertySelected(self)
         }
     }
     
