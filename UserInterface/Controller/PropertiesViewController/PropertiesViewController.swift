@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 8/8/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 open class PropertiesViewController: SOViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -42,6 +43,8 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
             }
         }
     }
+    
+    private var contentSizeObservation: NSKeyValueObservation?
 
     public init() {
         emptyView = UILabel()
@@ -55,6 +58,13 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         emptyView.numberOfLines = 0
         emptyView.textAlignment = .center
         emptyView.text = emptyString()
+        
+        contentSizeObservation = tableView.observe(\.contentSize) { [weak self] (tableView, _) in
+            guard let me = self else { return }
+            if me.popoverPresentationController != nil || me.navigationController?.popoverPresentationController != nil {
+                me.preferredContentSize = tableView.contentSize
+            }
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -148,11 +158,10 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
             if self.properties.count == 0 {
                 self.loading = true
             }
-            deferred({ properties in
+            deferred({ [weak self] properties in
                 assert(Thread.isMainThread, "Deferred property loader must callback on main thread.")
 
-                self.setProperties(properties)
-                
+                self?.setProperties(properties)
                 
                 completion?()
             })
@@ -165,7 +174,11 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         self.loading = false
         
         self.properties = properties.filter({ section -> Bool in
-            return !(section.emptyString == nil && section.items.count == 0)
+            // If we won't show anything for this section, just remove it
+            if section.emptyString == nil && section.items.count == 0 && !(section.showsActionIfEmpty && section.action != nil) {
+                return false
+            }
+            return true
         })
     }
 
@@ -309,8 +322,8 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
             let cell = tableView.dequeueReusableCell(PropertyCell.self, for: indexPath)
 
             cell.textLabel?.text = propertySection.emptyString
-            cell.textLabel?.textColor = Theme.current.tableCellTextColor
-            cell.selectedBackgroundView?.backgroundColor = Theme.current.tableCellBackgroundSelectedColor
+            cell.textLabel?.textColor = Theme.current?.tableCellTextColor
+            cell.selectedBackgroundView?.backgroundColor = Theme.current?.tableCellBackgroundSelectedColor
 
             return cell
         } else if indexPath.row >= propertySection.items.count {
@@ -350,7 +363,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
     
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let hfView = view as? UITableViewHeaderFooterView {
-            hfView.textLabel?.textColor = Theme.current.tableHeaderTextColor
+            hfView.textLabel?.textColor = Theme.current?.tableHeaderTextColor
         }
     }
 

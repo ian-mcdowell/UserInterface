@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 8/4/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 public class ZoomTransitionController: SOTransitionController {
 

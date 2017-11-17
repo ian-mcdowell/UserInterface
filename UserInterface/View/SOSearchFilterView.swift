@@ -130,7 +130,7 @@ extension SOSearchFilterView: UICollectionViewDelegate {
             vc.popoverPresentationController?.sourceRect = cell.bounds
             vc.popoverPresentationController?.permittedArrowDirections = .up
             vc.popoverPresentationController?.delegate = self
-            vc.popoverPresentationController?.backgroundColor = Theme.current.backgroundColor
+            vc.popoverPresentationController?.backgroundColor = Theme.current?.backgroundColor
             
             filterViewDelegate?.containingViewController().present(vc, animated: true, completion: nil)
         }
@@ -190,13 +190,13 @@ private class SOSearchFilterCell: SOCollectionViewCell {
     var isFilled: Bool = false {
         didSet {
             if isFilled {
-                backgroundColor = Theme.current.mainColor
+                backgroundColor = Theme.current?.mainColor
                 layer.borderWidth = 0
                 label.textColor = .white
             } else {
                 backgroundColor = .clear
                 layer.borderWidth = 1
-                label.textColor = Theme.current.tableCellSecondaryTextColor
+                label.textColor = Theme.current?.tableCellSecondaryTextColor
             }
         }
     }

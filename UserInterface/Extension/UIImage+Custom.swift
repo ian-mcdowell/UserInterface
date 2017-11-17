@@ -6,10 +6,15 @@
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
 import ObjectiveC
+import UIKit
 
 private var avgAssociationKey: UInt8 = 0
 
 public extension UIImage {
+    
+    public static var close: UIImage {
+        return UIImage.init(named: "Close", in: Bundle.init(identifier: "net.ianmcdowell.UserInterface"), compatibleWith: nil)!
+    }
 
     /// Scales the image to the given CGSize
     ///
@@ -30,6 +35,8 @@ public extension UIImage {
         self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
+        assert(newImage?.size == size, "Image size scaling was incorrect. Expected size: \(size), actual: \(newImage!.size)")
         return newImage!.withRenderingMode(self.renderingMode)
     }
 
@@ -41,7 +48,7 @@ public extension UIImage {
         return self.scaled(
             toSize: CGSize(
                 width: width,
-                height: self.size.height * (width / self.size.width)
+                height: round(self.size.height * (width / self.size.width))
             )
         )
     }
@@ -53,7 +60,7 @@ public extension UIImage {
     public func scaled(toHeight height: CGFloat) -> UIImage {
         return self.scaled(
             toSize: CGSize(
-                width: self.size.width * (height / self.size.height),
+                width: round(self.size.width * (height / self.size.height)),
                 height: height
             )
         )

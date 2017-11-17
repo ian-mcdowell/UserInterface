@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C02AEE01FA30B5D0053C191 /* SOEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C02AEDF1FA30B5D0053C191 /* SOEmptyCell.swift */; };
 		3C130A391E66241C0052FBD0 /* SOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C130A381E66241C0052FBD0 /* SOAlertView.swift */; };
 		3C130A3C1E66342E0052FBD0 /* PropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C130A3B1E66342E0052FBD0 /* PropertiesViewController.swift */; };
 		3C130A3E1E66344D0052FBD0 /* PropertySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C130A3D1E66344D0052FBD0 /* PropertySection.swift */; };
@@ -23,14 +24,16 @@
 		3C38EF9E1E582C77001E6955 /* UIViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38EF9D1E582C77001E6955 /* UIViewController+Empty.swift */; };
 		3C66F7701F1E937900284ED4 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C06B6AF1F1E8F620033956D /* Themes.swift */; };
 		3C6BFB431F0E6A8200D938EC /* UIViewController+CheckDeallocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BFB421F0E6A8200D938EC /* UIViewController+CheckDeallocation.swift */; };
+		3C7051F21F68B6E600B139B7 /* SOCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7051F11F68B6E600B139B7 /* SOCollectionReusableView.swift */; };
 		3C9135CB1F1E9C6F00523334 /* SOTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9135CA1F1E9C6F00523334 /* SOTableViewController.swift */; };
 		3CC722021F1FBCA600CFDC1A /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC722011F1FBCA600CFDC1A /* AcknowledgementsViewController.swift */; };
+		3CD1360E1FB3FF1B00490FDA /* NSLayoutConstraint+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD1360D1FB3FF1B00490FDA /* NSLayoutConstraint+Custom.swift */; };
+		3CECC0A91FAAC5D6002E44D5 /* DraggableSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CECC0A81FAAC5D5002E44D5 /* DraggableSplitViewController.swift */; };
 		3CF3ACF51E9F317800922D03 /* SOSearchFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF3ACF41E9F317800922D03 /* SOSearchFilterView.swift */; };
-		3CF5EE6E1E450F11002E23FF /* SOTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF5EE6D1E450F11002E23FF /* SOTabViewController.swift */; };
+		3CF5EE6E1E450F11002E23FF /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF5EE6D1E450F11002E23FF /* TabViewController.swift */; };
 		3CF5EE701E45103E002E23FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CF5EE6F1E45103E002E23FF /* Assets.xcassets */; };
 		3CF828C31E4138F00075EF2B /* UserInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF828B91E4138F00075EF2B /* UserInterface.framework */; };
 		3CF828C81E4138F00075EF2B /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF828C71E4138F00075EF2B /* InterfaceTests.swift */; };
-		3CF828CA1E4138F00075EF2B /* UserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF828BC1E4138F00075EF2B /* UserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CF8290E1E4140D90075EF2B /* UIBarButtonItem+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829031E4140D90075EF2B /* UIBarButtonItem+Custom.swift */; };
 		3CF8290F1E4140D90075EF2B /* UICollectionView+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829041E4140D90075EF2B /* UICollectionView+Custom.swift */; };
 		3CF829101E4140D90075EF2B /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF829051E4140D90075EF2B /* UIColor+Custom.swift */; };
@@ -66,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C02AEDF1FA30B5D0053C191 /* SOEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOEmptyCell.swift; sourceTree = "<group>"; };
 		3C06B6AF1F1E8F620033956D /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		3C130A381E66241C0052FBD0 /* SOAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOAlertView.swift; sourceTree = "<group>"; };
 		3C130A3B1E66342E0052FBD0 /* PropertiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertiesViewController.swift; sourceTree = "<group>"; };
@@ -82,13 +86,16 @@
 		3C38EF991E58032C001E6955 /* OverlayTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayTransition.swift; sourceTree = "<group>"; };
 		3C38EF9D1E582C77001E6955 /* UIViewController+Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Empty.swift"; sourceTree = "<group>"; };
 		3C6BFB421F0E6A8200D938EC /* UIViewController+CheckDeallocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CheckDeallocation.swift"; sourceTree = "<group>"; };
+		3C7051F11F68B6E600B139B7 /* SOCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOCollectionReusableView.swift; sourceTree = "<group>"; };
 		3C9135CA1F1E9C6F00523334 /* SOTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOTableViewController.swift; sourceTree = "<group>"; };
 		3CC722011F1FBCA600CFDC1A /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
+		3CD1360D1FB3FF1B00490FDA /* NSLayoutConstraint+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Custom.swift"; sourceTree = "<group>"; };
+		3CECC0A81FAAC5D5002E44D5 /* DraggableSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSplitViewController.swift; sourceTree = "<group>"; };
+		3CECC0AA1FAAD5D9002E44D5 /* DraggableSplitViewController.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = DraggableSplitViewController.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3CF3ACF41E9F317800922D03 /* SOSearchFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOSearchFilterView.swift; sourceTree = "<group>"; };
-		3CF5EE6D1E450F11002E23FF /* SOTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOTabViewController.swift; sourceTree = "<group>"; };
+		3CF5EE6D1E450F11002E23FF /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		3CF5EE6F1E45103E002E23FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3CF828B91E4138F00075EF2B /* UserInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UserInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CF828BC1E4138F00075EF2B /* UserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInterface.h; sourceTree = "<group>"; };
 		3CF828BD1E4138F00075EF2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CF828C21E4138F00075EF2B /* UserInterfaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserInterfaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CF828C71E4138F00075EF2B /* InterfaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceTests.swift; sourceTree = "<group>"; };
@@ -197,7 +204,6 @@
 				3CF829381E41450B0075EF2B /* Controller */,
 				3CF8291C1E4141510075EF2B /* View */,
 				3C06B6AF1F1E8F620033956D /* Themes.swift */,
-				3CF828BC1E4138F00075EF2B /* UserInterface.h */,
 				3CF828BD1E4138F00075EF2B /* Info.plist */,
 				3CF5EE6F1E45103E002E23FF /* Assets.xcassets */,
 			);
@@ -227,6 +233,7 @@
 				3CF8290C1E4140D90075EF2B /* UIViewController+ProgressHUD.swift */,
 				3C38EF9D1E582C77001E6955 /* UIViewController+Empty.swift */,
 				3C6BFB421F0E6A8200D938EC /* UIViewController+CheckDeallocation.swift */,
+				3CD1360D1FB3FF1B00490FDA /* NSLayoutConstraint+Custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -248,6 +255,7 @@
 				3CF8291F1E41423A0075EF2B /* SOBorderedActionButton.swift */,
 				3CF829201E41423A0075EF2B /* SOCollectionHeaderView.swift */,
 				3CF829341E41430E0075EF2B /* SOCollectionViewCell.swift */,
+				3C7051F11F68B6E600B139B7 /* SOCollectionReusableView.swift */,
 				3CF829221E41423A0075EF2B /* SOCollectionViewFlowLayout.swift */,
 				3CF829231E41423A0075EF2B /* SOCollectionViewHolderCell.swift */,
 				3CF829241E41423A0075EF2B /* SOFullscreenTitleView.swift */,
@@ -255,6 +263,7 @@
 				3CF829361E4143110075EF2B /* SOTableViewCell.swift */,
 				3C130A381E66241C0052FBD0 /* SOAlertView.swift */,
 				3CF3ACF41E9F317800922D03 /* SOSearchFilterView.swift */,
+				3C02AEDF1FA30B5D0053C191 /* SOEmptyCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -266,8 +275,10 @@
 				3CF8293D1E4147EB0075EF2B /* PickerAlertController.swift */,
 				3CF829071E4140D90075EF2B /* SONavigationController.swift */,
 				3CF829391E41450B0075EF2B /* SOViewController.swift */,
-				3CF5EE6D1E450F11002E23FF /* SOTabViewController.swift */,
+				3CF5EE6D1E450F11002E23FF /* TabViewController.swift */,
 				3C9135CA1F1E9C6F00523334 /* SOTableViewController.swift */,
+				3CECC0A81FAAC5D5002E44D5 /* DraggableSplitViewController.swift */,
+				3CECC0AA1FAAD5D9002E44D5 /* DraggableSplitViewController.playground */,
 				3CC722011F1FBCA600CFDC1A /* AcknowledgementsViewController.swift */,
 			);
 			path = Controller;
@@ -280,7 +291,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CF828CA1E4138F00075EF2B /* UserInterface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +399,7 @@
 			files = (
 				3C6BFB431F0E6A8200D938EC /* UIViewController+CheckDeallocation.swift in Sources */,
 				3CF829371E4143110075EF2B /* SOTableViewCell.swift in Sources */,
+				3CECC0A91FAAC5D6002E44D5 /* DraggableSplitViewController.swift in Sources */,
 				3CF8293A1E41450B0075EF2B /* SOViewController.swift in Sources */,
 				3CF829131E4140D90075EF2B /* UITableView+Custom.swift in Sources */,
 				3CF8293E1E4147EB0075EF2B /* PickerAlertController.swift in Sources */,
@@ -406,8 +417,10 @@
 				3CF8292B1E41423A0075EF2B /* SOCollectionViewHolderCell.swift in Sources */,
 				3C130A451E6634ED0052FBD0 /* TextProperty.swift in Sources */,
 				3CF829101E4140D90075EF2B /* UIColor+Custom.swift in Sources */,
+				3CD1360E1FB3FF1B00490FDA /* NSLayoutConstraint+Custom.swift in Sources */,
 				3C38EF9A1E58032C001E6955 /* OverlayTransition.swift in Sources */,
 				3C130A471E6635420052FBD0 /* PropertyAction.swift in Sources */,
+				3C02AEE01FA30B5D0053C191 /* SOEmptyCell.swift in Sources */,
 				3C130A4E1E6636EB0052FBD0 /* PropertyCellRight.swift in Sources */,
 				3CF8291A1E41410D0075EF2B /* SOTransitionController.swift in Sources */,
 				3CF829271E41423A0075EF2B /* SOBorderedActionButton.swift in Sources */,
@@ -421,13 +434,14 @@
 				3CF8292C1E41423A0075EF2B /* SOFullscreenTitleView.swift in Sources */,
 				3C9135CB1F1E9C6F00523334 /* SOTableViewController.swift in Sources */,
 				3C130A521E6644F50052FBD0 /* PropertyCellToggle.swift in Sources */,
-				3CF5EE6E1E450F11002E23FF /* SOTabViewController.swift in Sources */,
+				3CF5EE6E1E450F11002E23FF /* TabViewController.swift in Sources */,
 				3CF8290F1E4140D90075EF2B /* UICollectionView+Custom.swift in Sources */,
 				3CF829351E41430E0075EF2B /* SOCollectionViewCell.swift in Sources */,
 				3C130A491E66357D0052FBD0 /* Properties.swift in Sources */,
 				3C38EF9E1E582C77001E6955 /* UIViewController+Empty.swift in Sources */,
 				3C130A501E6644E40052FBD0 /* PropertyCellSubtitle.swift in Sources */,
 				3CF8292D1E41423A0075EF2B /* SORoundedButtonCell.swift in Sources */,
+				3C7051F21F68B6E600B139B7 /* SOCollectionReusableView.swift in Sources */,
 				3CC722021F1FBCA600CFDC1A /* AcknowledgementsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,7 +495,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -575,7 +589,7 @@
 				INFOPLIST_FILE = UserInterface/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.Interface;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -595,7 +609,7 @@
 				INFOPLIST_FILE = UserInterface/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.Interface;
+				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;

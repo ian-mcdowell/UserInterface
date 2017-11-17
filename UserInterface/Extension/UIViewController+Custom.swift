@@ -5,10 +5,26 @@
 //  Created by Ian McDowell on 8/20/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
-public extension UIViewController {
+extension UIViewController {
+    
+    public func removeFromParent() {
+        self.willMove(toParentViewController: nil)
+        self.view.removeFromSuperview()
+        self.removeFromParentViewController()
+    }
+    
+    public func addChild(_ vc: UIViewController) {
+        addChild(vc, toSubview: self.view)
+    }
+    public func addChild(_ vc: UIViewController, toSubview view: UIView) {
+        addChildViewController(vc)
+        view.addSubview(vc.view)
+        vc.didMove(toParentViewController: self)
+    }
 
-    @objc public func close() {
+    @objc open func close() {
         self.closeWithAnimation(true)
     }
 

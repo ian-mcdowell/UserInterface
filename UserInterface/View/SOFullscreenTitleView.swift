@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 12/28/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 public class SOFullscreenTitleView: UIView {
 
@@ -58,7 +59,7 @@ public class SOFullscreenTitleView: UIView {
         textLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         textLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
 
-        boldTextLabel.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: text.characters.count > 0 ? 10 : 0).isActive = true
+        boldTextLabel.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: text.isEmpty ? 0 : 10).isActive = true
         boldTextLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         boldTextLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         boldTextLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true

@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 8/20/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 /// Base class for a view controller, which can respond to theme updates, among other things.
 open class SOViewController: UIViewController, Themeable {
@@ -47,13 +48,14 @@ open class SOViewController: UIViewController, Themeable {
 
     private var lastTheme: Theme?
     @objc private func applyCurrentTheme() {
-        let theme = Theme.current
-        self.applyTheme(theme)
-        if theme != lastTheme {
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
+        if let theme = Theme.current {
+            self.applyTheme(theme)
+            if theme != lastTheme {
+                self.view.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }
+            lastTheme = theme
         }
-        lastTheme = theme
     }
 
     

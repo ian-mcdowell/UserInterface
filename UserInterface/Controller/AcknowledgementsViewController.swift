@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 7/19/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 fileprivate struct Acknowledgement {
     
@@ -92,7 +93,7 @@ public class AcknowledgementsViewController: SOViewController, UITableViewDataSo
     
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? UITableViewHeaderFooterView {
-            header.backgroundView?.backgroundColor = Theme.current.tableCellBackgroundSelectedColor
+            header.backgroundView?.backgroundColor = Theme.current?.tableCellBackgroundSelectedColor
         }
     }
 }

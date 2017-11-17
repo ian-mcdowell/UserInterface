@@ -1,12 +1,13 @@
 //
-//  SOBorderedActionButton.swift
+//  SORoundedActionButton.swift
 //  Source
 //
 //  Created by Ian McDowell on 8/20/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
-public class SOBorderedActionButton: UIButton {
+public class SORoundedActionButton: UIButton {
 
     public init() {
         super.init(frame: CGRect.zero)
@@ -21,36 +22,44 @@ public class SOBorderedActionButton: UIButton {
     }
 
     private func setup() {
-        setTitleColor(tintColor, for: UIControlState())
-        setTitleColor(UIColor.white, for: .highlighted)
-
-        titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.regular)
-
-        layer.cornerRadius = 5
-        layer.borderWidth = 1
-        layer.borderColor = tintColor.cgColor
+        setTitleColor(.white, for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.bold)
+        
+        self.layer.borderWidth = 2
 
         // Add padding. 5 on top/bottom, 10 on sides
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 20)
 
         setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        
+        updateBackgroundColor()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layer.cornerRadius = self.frame.size.height / 2
     }
 
-    override public var tintColor: UIColor! {
+    public var color: UIColor? {
         didSet {
-            setTitleColor(tintColor, for: UIControlState())
-            layer.borderColor = tintColor.cgColor
+            updateBackgroundColor()
+            layer.borderColor = color?.cgColor
         }
     }
 
     override public var isHighlighted: Bool {
         didSet {
-            if isHighlighted {
-                backgroundColor = tintColor
-            } else {
-                backgroundColor = nil
-            }
+            updateBackgroundColor()
+        }
+    }
+    
+    private func updateBackgroundColor() {
+        if isHighlighted {
+            self.backgroundColor = nil
+        } else {
+            self.backgroundColor = color
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 12/22/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 public extension UIBarButtonItem {
     

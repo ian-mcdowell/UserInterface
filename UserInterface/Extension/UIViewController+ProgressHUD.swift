@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 1/18/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 /// Since extensions can not officially have stored properties,
 /// we use the objc_runtime to set and get associated objects.
@@ -114,7 +115,7 @@ public class ProgressHUD {
     
     /// Applies the values of all properties to the view.
     private func refreshAll() {
-        self.progressHUDView?.setProgress(self.progress, animated: false)
+        self.progressHUDView?.setProgress(self.percentCompleted)
         self.progressHUDView?.setText(self.text, animated: false)
         self.progressHUDView?.setBackground(self.backgroundColor)
         self.progressHUDView?.setColor(self.color, animated: false)
@@ -125,14 +126,36 @@ public class ProgressHUD {
         self.dimsBackground = !(!self.dimsBackground)
     }
     
+    private var progressObservations: [NSKeyValueObservation] = []
+    public var progress: Progress? = nil {
+        didSet {
+            if let progress = progress {
+                self.indeterminate = progress.isIndeterminate
+                self.text = progress.localizedDescription
+                let percentObservation = progress.observe(\Progress.fractionCompleted, changeHandler: { progress, change in
+                    self.percentCompleted = progress.fractionCompleted
+                })
+                let indeterminateObservation = progress.observe(\Progress.isIndeterminate, changeHandler: { progress, change in
+                    self.indeterminate = progress.isIndeterminate
+                })
+                let localizedDescriptionObservation = progress.observe(\Progress.localizedDescription, changeHandler: { progress, change in
+                    self.text = progress.localizedDescription
+                })
+                progressObservations = [percentObservation, indeterminateObservation, localizedDescriptionObservation]
+            } else {
+                progressObservations = []
+            }
+        }
+    }
+    
     /// The current value of the progress indicator, between 0 and 1. Animates when set. Initially set to 0.
     /// If it is set to an invalid value, the indicator becomes indeterminate.
-    public var progress: Float = 0 {
+    public var percentCompleted: Double = 0 {
         didSet {
-            self.indeterminate = !(progress >= 0 && progress <= 1)
+            self.indeterminate = !(percentCompleted >= 0 && percentCompleted <= 1)
             
             DispatchQueue.main.async {
-                self.progressHUDView?.setProgress(self.progress, animated: true)
+                self.progressHUDView?.setProgress(self.percentCompleted)
             }
         }
     }
@@ -318,8 +341,8 @@ private class ProgressHUDView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setProgress(_ progress: Float, animated: Bool) {
-        self.progressView?.setProgress(progress, animated: animated)
+    func setProgress(_ progress: Double) {
+        self.progressView?.setProgress(progress)
     }
     
     func setText(_ text: String?, animated: Bool) {
@@ -329,7 +352,7 @@ private class ProgressHUDView: UIView {
         
         if animated {
             UIView.animate(withDuration: 0.25) {
-                if text?.characters.count ?? 0 == 0 {
+                if text?.isEmpty ?? true {
                     self.labelView.alpha = 0
                     self.labelProgressViewConstraint?.constant = 0
                 } else {
@@ -385,7 +408,7 @@ private class ProgressHUDProgressView: UIView {
     
     func setup() {}
     
-    func setProgress(_ progress: Float, animated: Bool) {}
+    func setProgress(_ progress: Double) {}
 }
 
 
@@ -426,20 +449,8 @@ private class ProgressHUDDeterminateProgressView: ProgressHUDProgressView {
 
     }
 
-    override func setProgress(_ progress: Float, animated: Bool) {
-        ringLayer.removeAllAnimations()
-        let currentProgress = Float(ringLayer.strokeEnd)
-        
+    override func setProgress(_ progress: Double) {
         ringLayer.strokeEnd = CGFloat(progress)
-        
-        if animated {
-            let animation = CABasicAnimation.init(keyPath: "strokeEnd")
-            animation.duration = 0.1
-            animation.fromValue = NSNumber(value: currentProgress)
-            animation.toValue = NSNumber(value: progress)
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
-            ringLayer.add(animation, forKey: "progressAnimation")
-        }
     }
     
     override func layoutSubviews() {

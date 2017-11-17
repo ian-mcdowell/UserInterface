@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 8/20/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 /// A UICollectionViewFlowLayout subclass that invalidates itself on bounds change.
 public class SOCollectionViewFlowLayout: UICollectionViewFlowLayout {

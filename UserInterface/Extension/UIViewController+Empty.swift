@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 2/18/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 /// Since extensions can not officially have stored properties,
 /// we use the objc_runtime to set and get associated objects.

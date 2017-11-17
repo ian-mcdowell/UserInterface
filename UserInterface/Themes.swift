@@ -5,16 +5,23 @@
 //  Created by Ian McDowell on 8/20/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
     
 /// Protocol defining something that can receive a theme update.
 public protocol Themeable {
     func applyTheme(_ theme: Theme)
 }
 
-private var _currentTheme: Theme!
+public extension Themeable {
+    func applyCurrentTheme() {
+        if let theme = Theme.current {
+            self.applyTheme(theme)
+        }
+    }
+}
 
 /// Consists of various color values which are themed throughout the app.
-public struct Theme {
+public class Theme {
     
     public enum ThemeStyle {
         case light, dark
@@ -22,9 +29,7 @@ public struct Theme {
     
     public static let DidChangeNotification = NSNotification.Name(rawValue: "ThemeDidChange")
     
-    public static var current: Theme {
-        return _currentTheme
-    }
+    public private(set) static var current: Theme?
     
     fileprivate let bundle: Bundle
     public let style: ThemeStyle
@@ -37,7 +42,7 @@ public struct Theme {
     public func apply(toApplication application: UIApplication?) {
         let theme = self
         
-        _currentTheme = self
+        Theme.current = self
         
         // UINavigationBar
         UINavigationBar.appearance().barStyle = theme.barStyle
@@ -94,35 +99,62 @@ public struct Theme {
         NotificationCenter.default.post(name: Theme.DidChangeNotification, object: nil)
     }
     
+    private var colorCache: [String: UIColor] = [:]
     private func color(_ name: String) -> UIColor {
-        guard let color = UIColor(named: name, in: self.bundle, compatibleWith: UITraitCollection()) else {
-            assertionFailure("Theme: No color found in theme bundle with the name \(name).")
+        if let cached = colorCache[name] {
+            return cached
+        }
+        guard let color = UIColor(named: name, in: self.bundle, compatibleWith: nil) else {
+            assertionFailure("Theme: No color found in theme bundle with the name \(name)")
             return UIColor.white
         }
+        colorCache[name] = color
         return color
     }
     private func optionalColor(_ name: String) -> UIColor? {
-        return UIColor(named: name, in: self.bundle, compatibleWith: UITraitCollection())
+        if let cached = colorCache[name] {
+            return cached
+        }
+        if let color = UIColor(named: name, in: self.bundle, compatibleWith: UITraitCollection()) {
+            colorCache[name] = color
+            return color
+        }
+        return nil
     }
 
     public var mainColor: UIColor { return color("primary") }
+    
+    // MARK: Bars
     public var barTextColor: UIColor { return color("barText") }
     public var barButtonColor: UIColor { return color("barButton") }
     public var barButtonDisabledColor: UIColor { return color("barButtonDisabled") }
-    public var barTintColor: UIColor? { return optionalColor("barTint") }
+    public var barTintColor: UIColor { return color("barTint") }
+    
+    // MARK: Background
     public var darkBackgroundColor: UIColor { return color("backgroundDark") }
     public var backgroundColor: UIColor { return color("background") }
     public var dimmedBackgroundColor: UIColor { return color("backgroundDimmed") }
-    public var emptyTextColor: UIColor { return color("emptyText") }
-    public var separatorColor: UIColor { return color("separator") }
+    
+    // MARK: UITableViewCell
     public var tableCellBackgroundColor: UIColor { return color("tableCellBackground") }
     public var tableCellBackgroundSelectedColor: UIColor { return color("tableCellSelectedBackground") }
     public var tableCellTextColor: UIColor { return color("tableCellText") }
     public var tableCellSecondaryTextColor: UIColor { return color("tableCellTextSecondary") }
     public var tableHeaderTextColor: UIColor { return color("tableHeaderText") }
+    
+    // MARK: Text
     public var placeholderTextColor: UIColor { return color("placeholderText") }
+    public var emptyTextColor: UIColor { return color("emptyText") }
+    
+    // MARK: Borders
     public var borderSelectedColor: UIColor { return color("borderSelected") }
     public var borderColor: UIColor { return color("border") }
+    public var separatorColor: UIColor { return color("separator") }
+    
+    // MARK: Tabs
+    public var tabBackgroundSelectedColor: UIColor { return color("tabBackgroundSelected") }
+    public var tabCloseButtonColor: UIColor { return color("tabCloseButton") }
+    public var tabCloseButtonBackgroundColor: UIColor { return color("tabCloseButtonBackground") }
 
     public var barStyle: UIBarStyle {
         switch self.style {

@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 7/18/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 open class SOTableViewController: SOViewController, UITableViewDataSource, UITableViewDelegate {
     

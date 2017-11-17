@@ -5,11 +5,7 @@
 //  Created by Ian McDowell on 8/19/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
-
-/// Delegate for `SORoundedButtonCell`.
-public protocol SORoundedButtonCellDelegate: class {
-    func didLongPressButtonCell(_ cell: SORoundedButtonCell, _ item: Any)
-}
+import UIKit
 
 /// A rounded button `UICollectionViewCell` base class.
 /// Do not use this class, always subclass.
@@ -17,31 +13,13 @@ open class SORoundedButtonCell: SOCollectionViewCell {
 
     public let label = UILabel()
     public let imageView = UIImageView()
-    fileprivate var roundedView: UIView? {
-        didSet {
-            if let roundedView = roundedView {
-                roundedView.layer.cornerRadius = 5
-                roundedView.layer.masksToBounds = false
-
-                roundedView.layer.shadowColor = UIColor.black.cgColor
-                roundedView.layer.shadowRadius = 5
-                roundedView.layer.shadowOffset = CGSize.zero
-                roundedView.layer.shadowOpacity = 0.1
-
-                // Adding corner radius and shadow causes major scrolling perf hit.
-                // Rasterizing the layer helps a ton
-                roundedView.layer.shouldRasterize = true
-                roundedView.layer.rasterizationScale = UIScreen.main.scale
-            }
-        }
+    public var roundedView: UIView {
+        return contentView
     }
 
-    public var item: Any?
-    public weak var delegate: SORoundedButtonCellDelegate?
-
-    private var averageColor: UIColor? {
+    private var roundedViewBackgroundColor: UIColor? {
         didSet {
-            if oldValue != averageColor {
+            if oldValue != roundedViewBackgroundColor {
                 self.updateSelection()
             }
         }
@@ -49,7 +27,7 @@ open class SORoundedButtonCell: SOCollectionViewCell {
 
     open override var isSelected: Bool {
         didSet {
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.updateSelection()
             })
         }
@@ -57,7 +35,7 @@ open class SORoundedButtonCell: SOCollectionViewCell {
 
     open override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.updateSelection()
             })
         }
@@ -72,44 +50,51 @@ open class SORoundedButtonCell: SOCollectionViewCell {
         super.init(coder: aDecoder)
         setup()
     }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.isSelected = false
+        
+        roundedView.layer.cornerRadius = 5
+        roundedView.layer.masksToBounds = false
+        roundedView.clipsToBounds = true
+        
+        roundedView.layer.shadowColor = UIColor.black.cgColor
+        roundedView.layer.shadowRadius = 5
+        roundedView.layer.shadowOffset = CGSize.zero
+        roundedView.layer.shadowOpacity = 0.1
+        
+        // Adding corner radius and shadow causes major scrolling perf hit.
+        // Rasterizing the layer helps a ton
+        roundedView.layer.shouldRasterize = true
+        roundedView.layer.rasterizationScale = UIScreen.main.scale
+    }
 
     open override func applyTheme(_ theme: Theme) {
         super.applyTheme(theme)
 
-        self.averageColor = theme.tableCellBackgroundColor
+        self.roundedViewBackgroundColor = theme.tableCellBackgroundColor
         self.label.textColor = theme.tableCellTextColor
         self.imageView.tintColor = theme.tableCellTextColor
 
         switch theme.style {
         case .light:
-            roundedView?.layer.shadowOpacity = 0.1
+            roundedView.layer.shadowOpacity = 0.1
             break
         case .dark:
-            roundedView?.layer.shadowOpacity = 0.05
+            roundedView.layer.shadowOpacity = 0.05
             break
         }
     }
 
     open func setup() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
 
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.adjustsFontSizeToFitWidth = true
-
-        self.roundedView = self.contentView
-
-        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(SORoundedButtonCell.didLongPress)))
-    }
-
-    public func setImage(_ image: UIImage?) {
-        imageView.image = image
-        setImageViewContentModeBasedOnImage()
-    }
-
-    public func setImageViewContentModeBasedOnImage() {
-        imageView.contentMode = .scaleAspectFit
     }
 
     open override func prepareForReuse() {
@@ -117,97 +102,82 @@ open class SORoundedButtonCell: SOCollectionViewCell {
 
         imageView.image = nil
         label.text = nil
-        item = nil
     }
 
     open func updateSelection() {
         if self.isSelected || self.isHighlighted {
-            self.roundedView?.backgroundColor = self.averageColor?.withAlphaComponent(0.7)
-            self.roundedView?.tintColor = UIColor(white: 20 / 255, alpha: 1)
-            self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            self.roundedView.backgroundColor = self.roundedViewBackgroundColor?.withAlphaComponent(0.7)
+            self.roundedView.tintColor = UIColor(white: 20 / 255, alpha: 1)
+            self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98).translatedBy(x: 0, y: 1)
         } else {
-            self.roundedView?.backgroundColor = self.averageColor?.withAlphaComponent(0.9)
-            self.roundedView?.tintColor = UIColor(white: 0 / 255, alpha: 1)
+            self.roundedView.backgroundColor = self.roundedViewBackgroundColor?.withAlphaComponent(0.9)
+            self.roundedView.tintColor = UIColor(white: 0 / 255, alpha: 1)
             self.transform = CGAffineTransform.identity
-        }
-    }
-
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-
-        self.isSelected = false
-
-        setImageViewContentModeBasedOnImage()
-    }
-
-    @objc func didLongPress() {
-        if let item = self.item {
-            self.delegate?.didLongPressButtonCell(self, item)
         }
     }
 }
 
 /// A special `SORoundedButtonCell` with an image in the center and text below the rounded square.
-public class SORoundedSquareImageButtonCell: SORoundedButtonCell {
+open class SORoundedSquareImageButtonCell: SORoundedButtonCell {
 
-    private let subtitleLabel = UILabel()
-    private var subtitleHeight: NSLayoutConstraint!
+    public let subtitleLabel = UILabel()
+    
+    // Becomes the rounded view
+    private let imageViewContainer = UIView()
+    
+    public override var roundedView: UIView {
+        return imageViewContainer
+    }
 
     open override func setup() {
-
         super.setup()
 
-        let roundedView = UIView()
-        roundedView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(roundedView)
+        imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageViewContainer)
 
-        roundedView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        roundedView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        roundedView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        roundedView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
+        NSLayoutConstraint.activate([
+            imageViewContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageViewContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageViewContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageViewContainer.widthAnchor.constraint(equalTo: imageViewContainer.heightAnchor)
+        ])
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         roundedView.addSubview(imageView)
         imageView.constrainToEdgesOfSuperview()
 
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         contentView.addSubview(label)
-        label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: 5)
+        ])
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
         subtitleLabel.adjustsFontSizeToFitWidth = true
-        subtitleLabel.textColor = .white
+        subtitleLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         subtitleLabel.textAlignment = .center
+        subtitleLabel.numberOfLines = 1
+        subtitleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        subtitleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
         contentView.addSubview(subtitleLabel)
-        subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        subtitleLabel.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-        subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        subtitleHeight = subtitleLabel.heightAnchor.constraint(equalToConstant: 0)
-        subtitleHeight.isActive = true
-
-        self.roundedView = roundedView
+        NSLayoutConstraint.activate([
+            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            subtitleLabel.topAnchor.constraint(equalTo: label.bottomAnchor),
+            subtitleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
+        ])
     }
 
-    public var subtitle: String? {
-        didSet {
-            subtitleLabel.text = subtitle
-
-            if subtitle != nil {
-                subtitleHeight.constant = 13
-            } else {
-                subtitleHeight.constant = 0
-            }
-        }
-    }
-
-    public override func applyTheme(_ theme: Theme) {
+    open override func applyTheme(_ theme: Theme) {
         super.applyTheme(theme)
 
         // Make the text colors always white
@@ -215,19 +185,4 @@ public class SORoundedSquareImageButtonCell: SORoundedButtonCell {
         subtitleLabel.textColor = .white
     }
 
-    public override func setImageViewContentModeBasedOnImage() {
-        let width = imageView.frame.size.width
-        let height = imageView.frame.size.height
-
-        if width == 0 || height == 0 {
-            return
-        }
-        if let i = imageView.image {
-            if i.size.width > width || i.size.height > height {
-                imageView.contentMode = .scaleAspectFit
-            } else {
-                imageView.contentMode = .center
-            }
-        }
-    }
 }

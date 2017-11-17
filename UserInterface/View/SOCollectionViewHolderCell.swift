@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 12/23/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 open class SOCollectionViewHolderCell<T: Equatable, V: UICollectionViewCell>: SOCollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 

@@ -5,24 +5,33 @@
 //  Created by Ian McDowell on 2/17/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
-import Foundation
+public enum OverlayTransitionDirection {
+    case fromBottom
+    case fromLeft
+}
 
 public class OverlayTransitionController: SOTransitionController {
+    
+    let direction: OverlayTransitionDirection
+    public init(direction: OverlayTransitionDirection = .fromBottom) {
+        self.direction = direction
+    }
     
     // MARK: UIViewControllerTransitioningDelegate
     
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         
-        return OverlayPresentationController(presentedViewController: presented, presenting: presenting)
+        return OverlayPresentationController(direction: direction, presentedViewController: presented, presenting: presenting)
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return OverlayTransition(dismiss: false)
+        return OverlayTransition(direction: direction, dismiss: false)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return OverlayTransition(dismiss: true)
+        return OverlayTransition(direction: direction, dismiss: true)
     }
     
 }
@@ -30,9 +39,11 @@ public class OverlayTransitionController: SOTransitionController {
 private class OverlayTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
 
     private let isPresentation: Bool
+    private let direction: OverlayTransitionDirection
     
-    init(dismiss: Bool) {
-        isPresentation = !dismiss
+    init(direction: OverlayTransitionDirection, dismiss: Bool) {
+        self.direction = direction
+        self.isPresentation = !dismiss
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -60,7 +71,12 @@ private class OverlayTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         let appearedFrame = transitionContext.finalFrame(for: animatingVC)
         
         var dismissedFrame = appearedFrame
-        dismissedFrame.origin.y = containerView.frame.height
+        switch direction {
+        case .fromBottom:
+            dismissedFrame.origin.y = containerView.frame.height
+        case .fromLeft:
+            dismissedFrame.origin.x = -containerView.frame.width
+        }
         
         let initialFrame = isPresentation ? dismissedFrame : appearedFrame
         let finalFrame = isPresentation ? appearedFrame : dismissedFrame
@@ -90,9 +106,12 @@ private class OverlayTransition: UIPercentDrivenInteractiveTransition, UIViewCon
 
 private class OverlayPresentationController: UIPresentationController {
     
+    private let direction: OverlayTransitionDirection
     private let dimmingView: UIView
     
-    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+    init(direction: OverlayTransitionDirection, presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        
+        self.direction = direction
         
         dimmingView = UIView()
         dimmingView.backgroundColor = UIColor(white: 0, alpha: 0.4)
@@ -116,6 +135,13 @@ private class OverlayPresentationController: UIPresentationController {
         }
         
         presentedView?.layer.cornerRadius = 10
+        switch direction {
+        case .fromBottom:
+            presentedView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case .fromLeft:
+            presentedView?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        }
+        
         presentedView?.layer.masksToBounds = true
         
         // Make sure the dimming view is the size of the container's bounds and fully transparent
@@ -175,17 +201,22 @@ private class OverlayPresentationController: UIPresentationController {
     
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
-        let topOffset: CGFloat = 75
+        var topOffset: CGFloat = 0
+        var rightOffset: CGFloat = 0
         
-        let maxWidth: CGFloat = 500
-        let maxHeight: CGFloat = 800
+        switch direction {
+        case .fromBottom:
+            topOffset = 75
+        case .fromLeft:
+            rightOffset = 75
+        }
         
         // Try to fulfill preferred content size.
         if container.preferredContentSize != .zero {
-            return CGSize(width: min(container.preferredContentSize.width, parentSize.width), height: min(container.preferredContentSize.height, parentSize.height - topOffset))
+            return CGSize(width: min(container.preferredContentSize.width, parentSize.width - rightOffset), height: min(container.preferredContentSize.height, parentSize.height - topOffset))
         }
         
-        return CGSize(width: min(parentSize.width, maxWidth), height: min(parentSize.height - topOffset, maxHeight))
+        return CGSize(width: parentSize.width - rightOffset, height: parentSize.height - topOffset)
     }
     
     override func containerViewWillLayoutSubviews() {
@@ -208,14 +239,28 @@ private class OverlayPresentationController: UIPresentationController {
         
         presentedViewFrame.size = self.size(forChildContentContainer: presentedViewController, withParentContainerSize: containerBounds.size)
         
+        let isSmaller: Bool
+        switch direction {
+        case .fromBottom:
+            isSmaller = containerBounds.size.width > presentedViewFrame.size.width
+        case .fromLeft:
+            isSmaller = containerBounds.size.height > presentedViewFrame.size.height
+        }
         
-        if containerBounds.size.width > presentedViewFrame.size.width {
-            // Center on screen if width is smaller than the container view
+        if isSmaller {
+            // Center on screen if size is smaller than the container view
             presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) / 2
             presentedViewFrame.origin.y = (containerBounds.size.height - presentedViewFrame.size.height) / 2
         } else {
-            // Show from bottom of screen
-            presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
+            switch direction {
+            case .fromBottom:
+                // Show from bottom of screen
+                presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
+            case .fromLeft:
+                // Show from left of screen
+                presentedViewFrame.origin.x = 0
+            }
+
         }
         
         return presentedViewFrame

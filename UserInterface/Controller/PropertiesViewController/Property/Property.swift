@@ -5,8 +5,7 @@
 //  Created by Ian McDowell on 2/28/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
-
-import Foundation
+import UIKit
 
 public enum PropertyStyle {
     case subtitle, right, toggle, text

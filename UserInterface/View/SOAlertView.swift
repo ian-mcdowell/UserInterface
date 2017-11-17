@@ -5,11 +5,10 @@
 //  Created by Ian McDowell on 2/28/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
-
-import Foundation
+import UIKit
 
 /// A full-screen alert view with an action button.
-open class SOAlertView: UIView {
+open class SOAlertView: UIView, Themeable {
     
     public let imageView: UIImageView
     public let label: UILabel
@@ -22,21 +21,16 @@ open class SOAlertView: UIView {
         
         super.init(frame: .zero)
         
-        self.backgroundColor = Theme.current.backgroundColor
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image?.scaled(toHeight: 50)
-        imageView.tintColor = Theme.current.emptyTextColor
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.baselineAdjustment = .alignCenters
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = Theme.current.emptyTextColor
         
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         actionButton.addTarget(self, action: #selector(SOAlertView.actionButtonTapped), for: .touchUpInside)
-        actionButton.tintColor = Theme.current.barButtonColor
         
         self.addSubview(imageView)
         self.addSubview(label)
@@ -54,6 +48,7 @@ open class SOAlertView: UIView {
         actionButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         self.setup()
+        self.applyCurrentTheme()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -70,6 +65,13 @@ open class SOAlertView: UIView {
     
     @objc open func actionButtonTapped() {
         
+    }
+    
+    public func applyTheme(_ theme: Theme) {
+        self.backgroundColor = theme.backgroundColor
+        imageView.tintColor = theme.emptyTextColor
+        label.textColor = theme.emptyTextColor
+        actionButton.tintColor = theme.barButtonColor
     }
     
 }

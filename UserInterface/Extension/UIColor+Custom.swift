@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 9/18/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 private extension Int {
     func duplicate4bits() -> Int {
@@ -50,7 +51,7 @@ public extension UIColor {
             return nil
         }
 
-        switch hex.characters.count {
+        switch hex.count {
         case 3:
             self.init(hex3: hexVal, alpha: alpha)
         case 6:
@@ -92,5 +93,25 @@ public extension UIColor {
         let textcolor = (1 - bgDelta < threshold) ? UIColor.black : UIColor.white
 
         return textcolor
+    }
+
+    func lighted(by percentage: CGFloat = 30.0) -> UIColor? {
+        return self.adjust(by: abs(percentage) )
+    }
+    
+    func darkened(by percentage: CGFloat = 30.0) -> UIColor? {
+        return self.adjust(by: -1 * abs(percentage) )
+    }
+    
+    func adjust(by percentage:CGFloat=30.0) -> UIColor? {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0;
+        if (self.getRed(&r, green: &g, blue: &b, alpha: &a)) {
+            return UIColor(red: min(r + percentage / 100, 1.0),
+                           green: min(g + percentage / 100, 1.0),
+                           blue: min(b + percentage / 100, 1.0),
+                           alpha: a)
+        } else {
+            return nil
+        }
     }
 }

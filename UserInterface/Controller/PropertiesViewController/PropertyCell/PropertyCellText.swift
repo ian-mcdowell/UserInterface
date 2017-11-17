@@ -5,8 +5,7 @@
 //  Created by Ian McDowell on 2/28/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
-
-import Foundation
+import UIKit
 
 internal class PropertyCellText: InternalPropertyCell {
     
@@ -43,9 +42,6 @@ internal class PropertyCellText: InternalPropertyCell {
     override func setProperty(_ property: Property, section: PropertySection, propertiesViewController: PropertiesViewController) {
         self.property = property
         
-        textLabel?.textColor = Theme.current.tableCellTextColor
-        
-        textField.textColor = Theme.current.tableCellTextColor
         textField.text = property._value
         
         if let property = property as? TextProperty {
@@ -76,7 +72,7 @@ internal class PropertyCellText: InternalPropertyCell {
         textField.attributedPlaceholder = NSAttributedString(
             string: property.name,
             attributes: [
-                NSAttributedStringKey.foregroundColor: Theme.current.placeholderTextColor
+                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .black
             ]
         )
         
@@ -89,6 +85,12 @@ internal class PropertyCellText: InternalPropertyCell {
     
     @objc func textFieldChanged() {
         self.property?.setValue(self.textField.text, propigate: false)
+    }
+    
+    override func applyTheme(_ theme: Theme) {
+        textLabel?.textColor = theme.tableCellTextColor
+        
+        textField.textColor = theme.tableCellTextColor
     }
 }
 
@@ -120,7 +122,7 @@ internal class PropertyCellTextWithLabel: PropertyCellText {
         textField.attributedPlaceholder = NSAttributedString(
             string: property.placeholder ?? "",
             attributes: [
-                NSAttributedStringKey.foregroundColor: Theme.current.placeholderTextColor
+                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .black
             ]
         )
         

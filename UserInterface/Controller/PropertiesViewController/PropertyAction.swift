@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public class PropertyAction {
     public var name: String?
@@ -24,7 +24,7 @@ public class PropertyAction {
         self.icon = icon
     }
     
-    public init(name: String? = nil, target: AnyObject, action: Selector, icon: UIImage? = nil) {
+    public init(name: String? = nil, target: AnyObject?, action: Selector, icon: UIImage? = nil) {
         self.name = name
         self.icon = icon
         self.target = target
@@ -50,7 +50,7 @@ public class PropertyAction {
     }
 }
 
-internal class PropertyActionCell: UITableViewCell {
+internal class PropertyActionCell: SOTableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
@@ -66,16 +66,18 @@ internal class PropertyActionCell: UITableViewCell {
     }
     
     func setAction(_ action: PropertyAction, propertiesViewController: PropertiesViewController) {
-        self.textLabel?.textColor = Theme.current.barButtonColor
-        
         self.textLabel?.text = action.name
         self.imageView?.image = action.icon?.scaled(toSize: CGSize(width: 25, height: 25))
-        self.selectedBackgroundView?.backgroundColor = Theme.current.tableCellBackgroundSelectedColor
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
         self.textLabel?.text = nil
+    }
+    
+    override func applyTheme(_ theme: Theme) {
+        self.textLabel?.textColor = theme.barButtonColor
+        self.selectedBackgroundView?.backgroundColor = theme.tableCellBackgroundSelectedColor
     }
 }

@@ -5,8 +5,7 @@
 //  Created by Ian McDowell on 2/28/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
-
-import Foundation
+import UIKit
 
 internal class PropertyCellRight: InternalPropertyCell {
     
@@ -14,9 +13,9 @@ internal class PropertyCellRight: InternalPropertyCell {
         return .value1
     }
     
-    override func setProperty(_ property: Property, section: PropertySection, propertiesViewController: PropertiesViewController) {
-        super.setProperty(property, section: section, propertiesViewController: propertiesViewController)
+    override func applyTheme(_ theme: Theme) {
+        super.applyTheme(theme)
         
-        self.detailTextLabel?.textColor = Theme.current.tableCellSecondaryTextColor
+        self.detailTextLabel?.textColor = theme.tableCellSecondaryTextColor
     }
 }

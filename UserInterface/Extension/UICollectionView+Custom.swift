@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 12/27/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 extension UICollectionView {
 

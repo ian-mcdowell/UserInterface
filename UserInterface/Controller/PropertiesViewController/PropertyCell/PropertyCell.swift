@@ -5,10 +5,9 @@
 //  Created by Ian McDowell on 2/28/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
-import Foundation
-
-open class PropertyCell: UITableViewCell {
+open class PropertyCell: SOTableViewCell {
     
     open class var style:  UITableViewCellStyle {
         return .default
@@ -29,7 +28,6 @@ open class PropertyCell: UITableViewCell {
     }
     
     open func setProperty(_ property: Property, section: PropertySection, propertiesViewController: PropertiesViewController) {
-        
     }
 }
 
@@ -58,10 +56,10 @@ internal class InternalPropertyCell: PropertyCell {
         
         self.detailTextLabel?.numberOfLines = 1
         self.detailTextLabel?.adjustsFontSizeToFitWidth = true
-        self.detailTextLabel?.minimumScaleFactor = 0.5
+        self.detailTextLabel?.minimumScaleFactor = 0.8
         self.textLabel?.numberOfLines = 1
         self.textLabel?.adjustsFontSizeToFitWidth = true
-        self.textLabel?.minimumScaleFactor = 0.5
+        self.textLabel?.minimumScaleFactor = 0.8
         
         self.selectedBackgroundView = UIView()
     }
@@ -71,11 +69,9 @@ internal class InternalPropertyCell: PropertyCell {
     }
     
     override func setProperty(_ property: Property, section: PropertySection, propertiesViewController: PropertiesViewController) {
-        self.property = property
+        super.setProperty(property, section: section, propertiesViewController: propertiesViewController)
         
-        self.textLabel?.textColor = Theme.current.tableCellTextColor
-        self.detailTextLabel?.textColor = Theme.current.tableCellTextColor
-        self.selectedBackgroundView?.backgroundColor = Theme.current.tableCellBackgroundSelectedColor
+        self.property = property
         
         self.textLabel?.text = property.name
         self.detailTextLabel?.text = property.value
@@ -105,6 +101,16 @@ internal class InternalPropertyCell: PropertyCell {
         if property.editAction != nil {
             self.editingAccessoryType = .disclosureIndicator
         }
+        
+        if let accessoryView = property.customAccessoryView {
+            self.accessoryView = accessoryView
+        }
+    }
+    
+    override func applyTheme(_ theme: Theme) {
+        self.textLabel?.textColor = theme.tableCellTextColor
+        self.detailTextLabel?.textColor = theme.tableCellTextColor
+        self.selectedBackgroundView?.backgroundColor = theme.tableCellBackgroundSelectedColor
     }
     
     override func prepareForReuse() {

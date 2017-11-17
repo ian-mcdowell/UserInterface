@@ -1,15 +1,15 @@
 //
-//  SOCollectionViewCell.swift
-//  Source
+//  SOCollectionReusableView.swift
+//  UserInterface
 //
-//  Created by Ian McDowell on 12/28/16.
-//  Copyright © 2016 Ian McDowell. All rights reserved.
+//  Created by Ian McDowell on 9/12/17.
+//  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+
 import UIKit
 
-/// Themeable UICollectionViewCell base class.
-open class SOCollectionViewCell: UICollectionViewCell, Themeable {
-
+open class SOCollectionReusableView: UICollectionReusableView, Themeable {
+    
     private var themeObserver: Any?
     
     public required init?(coder aDecoder: NSCoder) {
@@ -28,11 +28,12 @@ open class SOCollectionViewCell: UICollectionViewCell, Themeable {
     }
     
     deinit {
-        if let observer = themeObserver {
+        if let observer = self.themeObserver {
             NotificationCenter.default.removeObserver(observer)
         }
     }
     
     open func applyTheme(_ theme: Theme) {
     }
+
 }

@@ -5,20 +5,32 @@
 //  Created by Ian McDowell on 11/17/16.
 //  Copyright © 2016 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 /// Themeable UITableViewCell base class.
 open class SOTableViewCell: UITableViewCell, Themeable {
+    
+    private var themeObserver: Any?
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
-        applyTheme(Theme.current)
+        setup()
     }
-
+    
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        applyTheme(Theme.current)
+        setup()
+    }
+    
+    private func setup() {
+        applyCurrentTheme()
+        themeObserver = NotificationCenter.default.addObserver(forName: Theme.DidChangeNotification, object: nil, queue: .main, using: { [weak self] _ in self?.applyCurrentTheme() })
+    }
+    
+    deinit {
+        if let observer = self.themeObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     open func applyTheme(_ theme: Theme) {
@@ -31,11 +43,6 @@ open class SOTableViewCell: UITableViewCell, Themeable {
         self.selectedBackgroundView?.backgroundColor = theme.tableCellBackgroundSelectedColor
     }
 
-    open override func prepareForReuse() {
-        super.prepareForReuse()
-
-        applyTheme(Theme.current)
-    }
 }
 
 public class SOTableViewCellText: SOTableViewCell {
@@ -97,6 +104,7 @@ public class SOTableViewCellTextView: SOTableViewCell {
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        textView.backgroundColor = .clear
         
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
@@ -106,6 +114,12 @@ public class SOTableViewCellTextView: SOTableViewCell {
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func applyTheme(_ theme: Theme) {
+        super.applyTheme(theme)
+        
+        textView.textColor = theme.tableCellTextColor
     }
 }
 

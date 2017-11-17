@@ -5,6 +5,7 @@
 //  Created by Ian McDowell on 1/29/17.
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
+import UIKit
 
 public enum PickerAlertControllerStyle {
     case table, picker
@@ -17,6 +18,8 @@ open class PickerAlertController<T: Equatable>: UIAlertController {
     public init(title: String? = nil, message: String? = nil, style: PickerAlertControllerStyle = .picker) {
         self.style = style
         super.init(nibName: nil, bundle: nil)
+        self.title = title
+        self.message = message
     }
     
     required public init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -133,7 +136,11 @@ private class PickerViewController<T: Equatable>: PickerBaseViewController<T>, U
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.pickerAlertController?.name(forItem: items[row])
+        let components: [String?] = [
+            self.pickerAlertController?.name(forItem: items[row]),
+            self.pickerAlertController?.subtitle(forItem: items[row])
+        ]
+        return components.flatMap({ $0 }).joined(separator: " - ")
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
