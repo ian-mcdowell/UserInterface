@@ -1,0 +1,61 @@
+
+set(resources
+    "Assets.xcassets"
+)
+
+set(sources
+    "Themes.swift"
+    "View/SOTableViewCell.swift"
+    "View/SOSearchFilterView.swift"
+    "View/SORoundedButtonCell.swift"
+    "View/SOFullscreenTitleView.swift"
+    "View/SOEmptyCell.swift"
+    "View/SOCollectionViewHolderCell.swift"
+    "View/SOCollectionViewFlowLayout.swift"
+    "View/SOCollectionViewCell.swift"
+    "View/SOCollectionReusableView.swift"
+    "View/SOCollectionHeaderView.swift"
+    "View/SOBorderedActionButton.swift"
+    "View/SOBarButtonItem.swift"
+    "View/SOAlertView.swift"
+    "Transition/ZoomTransition.swift"
+    "Transition/SOTransitionController.swift"
+    "Transition/OverlayTransition.swift"
+    "Extension/UIViewController+ProgressHUD.swift"
+    "Extension/UIViewController+Empty.swift"
+    "Extension/UIViewController+Custom.swift"
+    "Extension/UIViewController+CheckDeallocation.swift"
+    "Extension/UIView+Custom.swift"
+    "Extension/UITableView+Custom.swift"
+    "Extension/UIImage+Custom.swift"
+    "Extension/UIColor+Custom.swift"
+    "Extension/UICollectionView+Custom.swift"
+    "Extension/UIBarButtonItem+Custom.swift"
+    "Extension/NSLayoutConstraint+Custom.swift"
+    "Controller/TabViewController.swift"
+    "Controller/SOViewController.swift"
+    "Controller/SOTableViewController.swift"
+    "Controller/SONavigationController.swift"
+    "Controller/PropertiesViewController/PropertySection.swift"
+    "Controller/PropertiesViewController/PropertyCell/PropertyCellToggle.swift"
+    "Controller/PropertiesViewController/PropertyCell/PropertyCellText.swift"
+    "Controller/PropertiesViewController/PropertyCell/PropertyCellSubtitle.swift"
+    "Controller/PropertiesViewController/PropertyCell/PropertyCellRight.swift"
+    "Controller/PropertiesViewController/PropertyCell/PropertyCell.swift"
+    "Controller/PropertiesViewController/PropertyAction.swift"
+    "Controller/PropertiesViewController/Property/TextProperty.swift"
+    "Controller/PropertiesViewController/Property/Property.swift"
+    "Controller/PropertiesViewController/PropertiesViewController.swift"
+    "Controller/PropertiesViewController/Properties.swift"
+    "Controller/PickerAlertController.swift"
+    "Controller/DraggableSplitViewController.swift"
+    "Controller/AcknowledgementsViewController.swift"
+)
+
+add_framework_target(
+    UserInterface
+    BUNDLE_ID net.ianmcdowell.UserInterface
+    SOURCES "${sources}"
+    RESOURCES "${resources}"
+    PUBLIC_HEADERS ""
+)
