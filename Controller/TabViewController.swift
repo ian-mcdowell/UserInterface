@@ -86,12 +86,6 @@ open class TabViewController: SOViewController {
         self.view.backgroundColor = theme.backgroundColor
         tabViewBar.applyTheme(theme)
     }
-
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        tabViewBar.refreshLayout()
-    }
     
     /// Activates the given tab and saves the new state
     ///
@@ -289,10 +283,14 @@ private class TabViewBar: UIView, Themeable {
     func refresh() {
         self.titleLabel.text = barDataSource?.visibleViewController?.title
         tabCollectionView.reloadData()
+        
         tabCollectionViewHeightConstraint.constant = (barDataSource?.viewControllers.count ?? 0) > 1 ? TabHeight : 0
-    }
-    func refreshLayout() {
-        tabCollectionView.layout.invalidateLayout()
+        self.layoutIfNeeded() // Apply constraint change immediately.
+        
+        if let visibleVC = barDataSource?.visibleViewController, let index = barDataSource?.viewControllers.index(of: visibleVC) {
+            let indexPath = IndexPath(item: index, section: 0)
+            tabCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
     }
 }
 
@@ -407,6 +405,9 @@ private class TabViewTab: SOCollectionViewCell {
     private weak var currentTab: UIViewController?
     weak var barDelegate: TabViewBarDelegate?
     
+    private var titleViewLeadingConstraint: NSLayoutConstraint?
+    private var titleViewTrailingConstraint: NSLayoutConstraint?
+    
     override var isSelected: Bool {
         didSet {
             if let theme = Theme.current {
@@ -453,7 +454,14 @@ private class TabViewTab: SOCollectionViewCell {
             closeButton.widthAnchor.constraint(equalToConstant: buttonSize.width).withPriority(.defaultHigh),
             closeButton.heightAnchor.constraint(equalToConstant: buttonSize.height).withPriority(.defaultHigh)
         ])
-        titleView.constrainToEdgesOfSuperview(UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32))
+        titleViewLeadingConstraint = titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+        titleViewTrailingConstraint = titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        NSLayoutConstraint.activate([
+            titleViewLeadingConstraint!,
+            titleViewTrailingConstraint!,
+            titleView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
         
         // Apply theme settings
         if let theme = Theme.current {
@@ -475,10 +483,16 @@ private class TabViewTab: SOCollectionViewCell {
             self.backgroundColor = nil
             self.closeButton.isHidden = false
             titleView.textColor = theme.tableCellTextColor
+            
+            // Inset title view by the width of the close button.
+            titleViewLeadingConstraint?.constant = TabHeight
+            titleViewTrailingConstraint?.constant = -TabHeight
         } else {
             self.backgroundColor = theme.tabBackgroundSelectedColor
             self.closeButton.isHidden = true
             titleView.textColor = theme.tableCellSecondaryTextColor
+            titleViewLeadingConstraint?.constant = 0
+            titleViewTrailingConstraint?.constant = 0
         }
     }
     

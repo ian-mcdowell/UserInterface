@@ -202,21 +202,29 @@ private class OverlayPresentationController: UIPresentationController {
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
         var topOffset: CGFloat = 0
+        var bottomOffset: CGFloat = 0
         var rightOffset: CGFloat = 0
+        var leftOffset: CGFloat = 0
         
         switch direction {
         case .fromBottom:
             topOffset = 75
         case .fromLeft:
-            rightOffset = 75
+            rightOffset = 83 // iphone x notch from right
         }
+        
+        let width = parentSize.width - rightOffset - leftOffset
+        let height = parentSize.height - topOffset - bottomOffset
         
         // Try to fulfill preferred content size.
         if container.preferredContentSize != .zero {
-            return CGSize(width: min(container.preferredContentSize.width, parentSize.width - rightOffset), height: min(container.preferredContentSize.height, parentSize.height - topOffset))
+            return CGSize(
+                width: min(container.preferredContentSize.width, height),
+                height: min(container.preferredContentSize.height, height)
+            )
         }
         
-        return CGSize(width: parentSize.width - rightOffset, height: parentSize.height - topOffset)
+        return CGSize(width: width, height: height)
     }
     
     override func containerViewWillLayoutSubviews() {
@@ -239,28 +247,15 @@ private class OverlayPresentationController: UIPresentationController {
         
         presentedViewFrame.size = self.size(forChildContentContainer: presentedViewController, withParentContainerSize: containerBounds.size)
         
-        let isSmaller: Bool
         switch direction {
         case .fromBottom:
-            isSmaller = containerBounds.size.width > presentedViewFrame.size.width
-        case .fromLeft:
-            isSmaller = containerBounds.size.height > presentedViewFrame.size.height
-        }
-        
-        if isSmaller {
-            // Center on screen if size is smaller than the container view
+            // Show from bottom of screen
+            presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
             presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) / 2
+        case .fromLeft:
+            // Show from left of screen
+            presentedViewFrame.origin.x = 0
             presentedViewFrame.origin.y = (containerBounds.size.height - presentedViewFrame.size.height) / 2
-        } else {
-            switch direction {
-            case .fromBottom:
-                // Show from bottom of screen
-                presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
-            case .fromLeft:
-                // Show from left of screen
-                presentedViewFrame.origin.x = 0
-            }
-
         }
         
         return presentedViewFrame
