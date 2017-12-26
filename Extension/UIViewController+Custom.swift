@@ -151,7 +151,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    public func showTextEntryAlert(_ title: String?, message: String?, actionButton: String = "OK", placeholder: String? = nil, existingText: String? = nil, destructive: Bool = false, completion: ((_ enteredText: String?) -> Void)? = nil) {
+    public func showTextEntryAlert(_ title: String?, message: String?, actionButton: String = "OK", placeholder: String? = nil, existingText: String? = nil, keyboardType: UIKeyboardType = .default, destructive: Bool = false, completion: ((_ enteredText: String?) -> Void)? = nil) {
         
         var text: UITextField!
         
@@ -164,6 +164,7 @@ extension UIViewController {
             text = textField
             textField.placeholder = placeholder
             textField.text = existingText
+            textField.keyboardType = keyboardType
         })
         
         alert.addAction(

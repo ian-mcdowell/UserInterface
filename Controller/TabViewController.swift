@@ -37,6 +37,13 @@ open class TabViewController: SOViewController {
         }
     }
     
+    public var emptyView: UIView? = nil {
+        didSet {
+            oldValue?.removeFromSuperview()
+            refreshEmptyView()
+        }
+    }
+    
     // MARK: Init
     
     public init() {
@@ -122,6 +129,16 @@ open class TabViewController: SOViewController {
         tabViewBar.setLeadingBarButtonItems(leftBarButtonItems + (model.visibleViewController?.navigationItem.leftBarButtonItems ?? []))
         tabViewBar.setTrailingBarButtonItems((rightBarButtonItems + (model.visibleViewController?.navigationItem.rightBarButtonItems ?? [])).reversed())
     }
+    fileprivate func refreshEmptyView() {
+        if let emptyView = self.emptyView {
+            if model.viewControllers.isEmpty {
+                contentView.addSubview(emptyView)
+                emptyView.constrainToEdgesOfSuperview()
+            } else {
+                emptyView.removeFromSuperview()
+            }
+        }
+    }
 }
 
 private class TabViewControllerModel: TabViewBarDataSource, TabViewBarDelegate {
@@ -141,6 +158,7 @@ private class TabViewControllerModel: TabViewBarDataSource, TabViewBarDelegate {
         visibleViewController = tab
         
         tabViewController?.refreshTabBar()
+        tabViewController?.refreshEmptyView()
     }
     
     func closeTab(_ tab: UIViewController) {
@@ -152,6 +170,7 @@ private class TabViewControllerModel: TabViewBarDataSource, TabViewBarDelegate {
         visibleViewController = viewControllers.last
         
         tabViewController?.refreshTabBar()
+        tabViewController?.refreshEmptyView()
     }
     
     func swapTab(atIndex index: Int, withTabAtIndex atIndex: Int) {
@@ -205,14 +224,9 @@ private class TabViewBar: UIView, Themeable {
         super.init(frame: .zero)
         
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        
+        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleLabel)
-        NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: BarHeight).withPriority(.defaultHigh)
-        ])
         
         for stackView in [leadingBarButtonStackView, trailingBarButtonStackView] {
             stackView.alignment = .fill
@@ -220,8 +234,18 @@ private class TabViewBar: UIView, Themeable {
             stackView.distribution = .fill
             stackView.spacing = 15
             stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            stackView.setContentHuggingPriority(.required, for: .horizontal)
             addSubview(stackView)
         }
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingBarButtonStackView.trailingAnchor, constant: 5),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingBarButtonStackView.leadingAnchor, constant: -5),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: BarHeight).withPriority(.defaultHigh)
+        ])
+        
         NSLayoutConstraint.activate([
             leadingBarButtonStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 15),
             leadingBarButtonStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
