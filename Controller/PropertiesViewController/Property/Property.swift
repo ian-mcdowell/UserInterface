@@ -107,7 +107,9 @@ public class Property {
         
         if _selected != selected {
             _selected = selected
-            _propertiesViewController?.propertySelected(self)
+            if selected {
+                _propertiesViewController?.propertySelected(self)
+            }
         }
     }
     
