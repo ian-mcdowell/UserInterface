@@ -672,13 +672,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/.ibuild/build/lib",
+					"$(CONFIGURATION_BUILD_DIR)/ibuild/lib",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.ibuild/build/swiftmodules";
+				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/swiftmodules";
 			};
 			name = Debug;
 		};
@@ -695,13 +695,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/.ibuild/build/lib",
+					"$(CONFIGURATION_BUILD_DIR)/ibuild/lib",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.ibuild/build/swiftmodules";
+				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/swiftmodules";
 			};
 			name = Release;
 		};
