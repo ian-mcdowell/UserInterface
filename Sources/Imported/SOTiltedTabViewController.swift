@@ -8,6 +8,6 @@
 
 import TiltedTabView
 
-open class SOTiltedTabViewController: TiltedTabViewController {
-    // Subclass to export from staticlib as part of this module
-}
+public protocol SOTiltedTabViewControllerDelegate: TiltedTabViewControllerDelegate {}
+public protocol SOTiltedTabViewControllerDataSource: TiltedTabViewControllerDataSource {}
+open class SOTiltedTabViewController: TiltedTabViewController {}
