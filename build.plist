@@ -4,22 +4,16 @@
 <dict>
 	<key>name</key>
 	<string>UserInterface</string>
-	<key>url</key>
-	<string>git@github.com:IMcD23/UserInterface.git</string>
 	<key>dependencies</key>
 	<array>
 		<dict>
-			<key>url</key>
-			<string>https://github.com/IMcD23/TiltedTabView.git</string>
+			<key>type</key>
+			<string>github</string>
+			<key>path</key>
+			<string>IMcD23/TiltedTabView</string>
 			<key>branch</key>
 			<string>master</string>
 		</dict>
 	</array>
-	<key>libraryOutputs</key>
-	<array/>
-	<key>buildSystem</key>
-	<string>xcode</string>
-	<key>buildArgs</key>
-	<array/>
 </dict>
 </plist>
