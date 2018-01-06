@@ -32,7 +32,7 @@ class Controller: NSObject {
         displayVC.progressHUD.remove()
     }
     func incProgress() {
-        displayVC.progressHUD.progress = displayVC.progressHUD.progress + 0.1
+        displayVC.progressHUD.progress += 0.1
     }
 }
 

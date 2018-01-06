@@ -10,16 +10,16 @@ import UIKit
 /// Since extensions can not officially have stored properties,
 /// we use the objc_runtime to set and get associated objects.
 /// This is the key used for storage and retrieval.
-private var EmptyLabelAssociatedObjectKey: UInt8 = 0
+private var emptyLabelAssociatedObjectKey: UInt8 = 0
 
 public extension UIView {
     
     public var emptyLabel: EmptyLabel {
-        if let emptyLabel = objc_getAssociatedObject(self, &EmptyLabelAssociatedObjectKey) as? EmptyLabel {
+        if let emptyLabel = objc_getAssociatedObject(self, &emptyLabelAssociatedObjectKey) as? EmptyLabel {
             return emptyLabel
         } else {
             let emptyLabel = EmptyLabel(self)
-            objc_setAssociatedObject(self, &EmptyLabelAssociatedObjectKey, emptyLabel, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &emptyLabelAssociatedObjectKey, emptyLabel, .OBJC_ASSOCIATION_RETAIN)
             return emptyLabel
         }
     }

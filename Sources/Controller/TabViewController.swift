@@ -7,8 +7,8 @@
 //
 import UIKit
 
-private let BarHeight: CGFloat = 44
-private let TabHeight: CGFloat = 32
+private let barHeight: CGFloat = 44
+private let tabHeight: CGFloat = 32
 
 open class TabViewController: SOViewController {
     
@@ -243,16 +243,16 @@ private class TabViewBar: UIView, Themeable {
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingBarButtonStackView.trailingAnchor, constant: 5),
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingBarButtonStackView.leadingAnchor, constant: -5),
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: BarHeight).withPriority(.defaultHigh)
+            titleLabel.heightAnchor.constraint(equalToConstant: barHeight).withPriority(.defaultHigh)
         ])
         
         NSLayoutConstraint.activate([
             leadingBarButtonStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 15),
             leadingBarButtonStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            leadingBarButtonStackView.heightAnchor.constraint(equalToConstant: BarHeight).withPriority(.defaultHigh),
+            leadingBarButtonStackView.heightAnchor.constraint(equalToConstant: barHeight).withPriority(.defaultHigh),
             trailingBarButtonStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -15),
             trailingBarButtonStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            trailingBarButtonStackView.heightAnchor.constraint(equalToConstant: BarHeight).withPriority(.defaultHigh)
+            trailingBarButtonStackView.heightAnchor.constraint(equalToConstant: barHeight).withPriority(.defaultHigh)
         ])
         
         tabCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -308,7 +308,7 @@ private class TabViewBar: UIView, Themeable {
         self.titleLabel.text = barDataSource?.visibleViewController?.title
         tabCollectionView.reloadData()
         
-        tabCollectionViewHeightConstraint.constant = (barDataSource?.viewControllers.count ?? 0) > 1 ? TabHeight : 0
+        tabCollectionViewHeightConstraint.constant = (barDataSource?.viewControllers.count ?? 0) > 1 ? tabHeight : 0
         self.layoutIfNeeded() // Apply constraint change immediately.
         
         if let visibleVC = barDataSource?.visibleViewController, let index = barDataSource?.viewControllers.index(of: visibleVC) {
@@ -446,7 +446,7 @@ private class TabViewTab: SOCollectionViewCell {
         
         super.init(frame: frame)
         
-        let buttonSize = CGSize(width: TabHeight, height: TabHeight)
+        let buttonSize = CGSize(width: tabHeight, height: tabHeight)
         let buttonImageSize = CGSize(width: 15, height: 15)
         let buttonSizeDiff = CGSize(width: buttonSize.width - buttonImageSize.width, height: buttonSize.height - buttonImageSize.height)
         let buttonInsets = UIEdgeInsets(top: buttonSizeDiff.height / 2, left: buttonSizeDiff.width / 2, bottom: buttonSizeDiff.height / 2, right: buttonSizeDiff.width / 2)
@@ -509,8 +509,8 @@ private class TabViewTab: SOCollectionViewCell {
             titleView.textColor = theme.tableCellTextColor
             
             // Inset title view by the width of the close button.
-            titleViewLeadingConstraint?.constant = TabHeight
-            titleViewTrailingConstraint?.constant = -TabHeight
+            titleViewLeadingConstraint?.constant = tabHeight
+            titleViewTrailingConstraint?.constant = -tabHeight
         } else {
             self.backgroundColor = theme.tabBackgroundSelectedColor
             self.closeButton.isHidden = true
