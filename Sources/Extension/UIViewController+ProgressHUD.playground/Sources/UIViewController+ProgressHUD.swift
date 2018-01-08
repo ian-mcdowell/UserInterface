@@ -98,11 +98,7 @@ public class ProgressHUD {
                 // Remove the view from the screen
                 self.progressHUDView?.removeFromSuperview()
                 self.progressHUDView = nil
-                
-                if self.disablesUserInteraction {
-                    self.viewController.view.isUserInteractionEnabled = true
-                }
-                
+
                 if self.dimmingView != nil {
                     self.dimmingView?.removeFromSuperview()
                     self.dimmingView = nil
@@ -123,7 +119,6 @@ public class ProgressHUD {
         
         self.cornerRadius = self.cornerRadius + 0
         self.indeterminate = !(!self.indeterminate)
-        self.disablesUserInteraction = !(!self.disablesUserInteraction)
         self.dimsBackground = !(!self.dimsBackground)
     }
     
@@ -177,15 +172,6 @@ public class ProgressHUD {
     public var cornerRadius: Float = 15 {
         didSet {
             progressHUDView?.layer.cornerRadius = CGFloat(cornerRadius)
-        }
-    }
-    
-    /// Whether or not to disable the user interaction of the presenting view controller when the HUD appears. Defaults to true.
-    public var disablesUserInteraction: Bool = true {
-        didSet {
-            if progressHUDView?.superview != nil {
-                self.viewController.view.isUserInteractionEnabled = !disablesUserInteraction
-            }
         }
     }
     

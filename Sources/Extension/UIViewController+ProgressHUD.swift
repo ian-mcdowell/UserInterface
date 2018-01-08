@@ -63,6 +63,7 @@ public class ProgressHUD {
             // Create the new view and add it to the view controller.
             self.progressHUDView = {
                 let p = ProgressHUDView(blurStyle: self.blurStyle)
+                p.progressHUD = self
                 self.viewController.view.addSubview(p)
                 
                 // Add constraints: center in view controller's view
@@ -96,10 +97,6 @@ public class ProgressHUD {
                 self.progressHUDView?.removeFromSuperview()
                 self.progressHUDView = nil
                 
-                if self.disablesUserInteraction {
-                    self.viewController.view.isUserInteractionEnabled = true
-                }
-                
                 if self.dimmingView != nil {
                     self.dimmingView?.removeFromSuperview()
                     self.dimmingView = nil
@@ -116,13 +113,13 @@ public class ProgressHUD {
     /// Applies the values of all properties to the view.
     private func refreshAll() {
         self.progressHUDView?.setProgress(self.percentCompleted)
-        self.progressHUDView?.setText(self.text, animated: false)
+        self.progressHUDView?.setText(self.text, self.detailText, animated: false)
         self.progressHUDView?.setBackground(self.backgroundColor)
         self.progressHUDView?.setColor(self.color, animated: false)
+        self.progressHUDView?.setShowsCancelButton(self.progress?.isCancellable ?? false)
         
         self.cornerRadius = self.cornerRadius + 0
         self.indeterminate = !(!self.indeterminate)
-        self.disablesUserInteraction = !(!self.disablesUserInteraction)
         self.dimsBackground = !(!self.dimsBackground)
     }
     
@@ -132,6 +129,7 @@ public class ProgressHUD {
             if let progress = progress {
                 self.indeterminate = progress.isIndeterminate
                 self.text = progress.localizedDescription
+                self.showsCancelButton = progress.isCancellable
                 let percentObservation = progress.observe(\Progress.fractionCompleted, changeHandler: { progress, change in
                     self.percentCompleted = progress.fractionCompleted
                 })
@@ -141,8 +139,12 @@ public class ProgressHUD {
                 let localizedDescriptionObservation = progress.observe(\Progress.localizedDescription, changeHandler: { progress, change in
                     self.text = progress.localizedDescription
                 })
-                progressObservations = [percentObservation, indeterminateObservation, localizedDescriptionObservation]
+                let localizedAdditionalDescriptionObservation = progress.observe(\Progress.localizedAdditionalDescription, changeHandler: { progress, change in
+                    self.detailText = progress.localizedAdditionalDescription
+                })
+                progressObservations = [percentObservation, indeterminateObservation, localizedDescriptionObservation, localizedAdditionalDescriptionObservation]
             } else {
+                self.showsCancelButton = false
                 progressObservations = []
             }
         }
@@ -172,7 +174,15 @@ public class ProgressHUD {
     public var text: String? = nil {
         didSet {
             DispatchQueue.main.async {
-                self.progressHUDView?.setText(self.text, animated: true)
+                self.progressHUDView?.setText(self.text, self.detailText, animated: true)
+            }
+        }
+    }
+    
+    public var detailText: String? = nil {
+        didSet {
+            DispatchQueue.main.async {
+                self.progressHUDView?.setText(self.text, self.detailText, animated: true)
             }
         }
     }
@@ -213,17 +223,6 @@ public class ProgressHUD {
         }
     }
     
-    /// Whether or not to disable the user interaction of the presenting view controller when the HUD appears. Defaults to true.
-    public var disablesUserInteraction: Bool = true {
-        didSet {
-            DispatchQueue.main.async {
-                if self.progressHUDView?.superview != nil {
-                    self.viewController.view.isUserInteractionEnabled = !self.disablesUserInteraction
-                }
-            }
-        }
-    }
-    
     public var dimsBackground: Bool = true {
         didSet {
             DispatchQueue.main.async {
@@ -245,22 +244,36 @@ public class ProgressHUD {
             }
         }
     }
+    
+    private var showsCancelButton: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.progressHUDView?.setShowsCancelButton(self.showsCancelButton)
+            }
+        }
+    }
+    
+    fileprivate func cancelButtonTappedInView() {
+        if let progress = self.progress, progress.isCancellable {
+            self.progress?.cancel()
+        }
+    }
 }
 
 
 /// The view that appears on screen.
 private class ProgressHUDView: UIView {
     
+    weak var progressHUD: ProgressHUD?
+    
     /// Blurred background.
     private var blurEffect: UIBlurEffect
     private var blurView: UIVisualEffectView
     
-    /// Constraint between label and progress view
-    private var labelProgressViewConstraint: NSLayoutConstraint? = nil
-    
     private var color: UIColor = .black {
         didSet {
             self.labelView.textColor = color
+            self.detailLabelView.textColor = color.withAlphaComponent(0.8)
             self.progressView?.color = color
         }
     }
@@ -268,19 +281,12 @@ private class ProgressHUDView: UIView {
     /// View for showing determinate progress
     private var progressView: ProgressHUDProgressView? = nil {
         didSet {
+            oldValue?.removeFromSuperview()
             if let progressView = progressView {
                 progressView.color = self.color
-                
-                progressView.translatesAutoresizingMaskIntoConstraints = false
-                self.addSubview(progressView)
                 progressView.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 progressView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                progressView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-                progressView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-                self.labelProgressViewConstraint = progressView.bottomAnchor.constraint(equalTo: self.labelView.topAnchor, constant: -10)
-                self.labelProgressViewConstraint?.isActive = true
-            } else {
-                labelProgressViewConstraint = nil
+                stackView.insertArrangedSubview(progressView, at: 0)
             }
         }
     }
@@ -302,11 +308,18 @@ private class ProgressHUDView: UIView {
         }
     }
     
-    private var labelView: UILabel!
+    private var stackView: UIStackView
+    private var labelView: UILabel
+    private var detailLabelView: UILabel
+    private var cancelButton: UIButton
     
     init(blurStyle: UIBlurEffectStyle) {
         blurEffect = UIBlurEffect(style: blurStyle)
         blurView = UIVisualEffectView(effect: blurEffect)
+        stackView = UIStackView()
+        labelView = UILabel()
+        detailLabelView = UILabel()
+        cancelButton = UIButton(type: .system)
         
         super.init(frame: .zero)
         
@@ -320,21 +333,30 @@ private class ProgressHUDView: UIView {
         // Add blur view & vibrancy view
         self.addSubview(blurView)
         blurView.constrainToEdgesOfSuperview()
+        
+        // Set up stack view
+        self.addSubview(stackView)
+        stackView.constrainToEdgesOfSuperview(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.alignment = .center
 
         // Set up label
-        labelView = {
-            let label = UILabel()
-            label.textAlignment = .center
-            label.numberOfLines = 0
-            label.textColor = self.color
-            self.addSubview(label)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-            label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
-            
-            return label
-        }()
+        labelView.textAlignment = .center
+        labelView.numberOfLines = 0
+        labelView.textColor = self.color
+        labelView.font = UIFont.preferredFont(forTextStyle: .body)
+        stackView.addArrangedSubview(labelView)
+        
+        // Set up detail label
+        detailLabelView.textAlignment = .center
+        detailLabelView.numberOfLines = 0
+        detailLabelView.textColor = self.color.withAlphaComponent(0.8)
+        detailLabelView.font = UIFont.preferredFont(forTextStyle: .caption2)
+        
+        // Set up cancel button
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -345,19 +367,24 @@ private class ProgressHUDView: UIView {
         self.progressView?.setProgress(progress)
     }
     
-    func setText(_ text: String?, animated: Bool) {
+    func setText(_ text: String?, _ detailText: String?, animated: Bool) {
         self.layoutIfNeeded()
         
         self.labelView.text = text
+        self.detailLabelView.text = detailText
         
         if animated {
             UIView.animate(withDuration: 0.25) {
                 if text?.isEmpty ?? true {
                     self.labelView.alpha = 0
-                    self.labelProgressViewConstraint?.constant = 0
                 } else {
                     self.labelView.alpha = 1
-                    self.labelProgressViewConstraint?.constant = -10
+                }
+                if detailText?.isEmpty ?? true {
+                    self.detailLabelView.removeFromSuperview()
+                } else if self.detailLabelView.superview == nil {
+                    let index = self.stackView.arrangedSubviews.index(of: self.labelView)!.advanced(by: 1)
+                    self.stackView.insertArrangedSubview(self.detailLabelView, at: index)
                 }
                 
                 self.layoutIfNeeded()
@@ -377,6 +404,17 @@ private class ProgressHUDView: UIView {
         blurView.isHidden = backgroundColor != nil
     }
     
+    func setShowsCancelButton(_ showCancel: Bool) {
+        if showCancel {
+            stackView.addArrangedSubview(cancelButton)
+        } else {
+            cancelButton.removeFromSuperview()
+        }
+    }
+    
+    @objc private func cancelButtonTapped() {
+        progressHUD?.cancelButtonTappedInView()
+    }
 }
 
 private enum ProgressHUDProgressViewType {

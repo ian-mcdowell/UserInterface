@@ -209,7 +209,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         return ""
     }
 
-    open func propertySelected(_ property: Property) {
+    open func propertySelectionChanged(_ property: Property) {
     }
     
     open func propertyValueChanged(_ property: Property) {
