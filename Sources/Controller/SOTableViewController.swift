@@ -33,6 +33,14 @@ open class SOTableViewController: SOViewController, UITableViewDataSource, UITab
         self.view = tableView
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        for indexPath in self.tableView.indexPathsForSelectedRows ?? [] {
+            tableView.deselectRow(at: indexPath, animated: animated)
+        }
+    }
+    
     open override func applyTheme(_ theme: Theme) {
         super.applyTheme(theme)
         
