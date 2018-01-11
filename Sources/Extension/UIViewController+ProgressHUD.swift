@@ -154,7 +154,11 @@ public class ProgressHUD {
     /// If it is set to an invalid value, the indicator becomes indeterminate.
     public var percentCompleted: Double = 0 {
         didSet {
-            self.indeterminate = !(percentCompleted >= 0 && percentCompleted <= 1)
+            if percentCompleted == -1 {
+                self.indeterminate = true
+            } else if !(percentCompleted >= 0 && percentCompleted <= 1) {
+                return
+            }
             
             DispatchQueue.main.async {
                 self.progressHUDView?.setProgress(self.percentCompleted)
