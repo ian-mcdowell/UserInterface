@@ -25,17 +25,13 @@ fileprivate struct Acknowledgement {
     static func acknowledgements(at url: URL) -> [Acknowledgement] {
         var acknowledgements = [Acknowledgement]()
         
-        if let plist = NSArray(contentsOfFile: url.path) as? [[String: String]] {
-            for dict in plist {
-                if
-                    let title = dict["title"],
-                    let text = dict["text"] {
-                    acknowledgements.append(Acknowledgement(title: title, text: text))
-                }
+        if let plist = NSDictionary(contentsOf: url) as? [String: String] {
+            for (key, value) in plist {
+                acknowledgements.append(Acknowledgement(title: key, text: value))
             }
         }
         
-        return acknowledgements
+        return acknowledgements.sorted(by: { $0.title < $1.title })
     }
 }
 
