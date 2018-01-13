@@ -56,9 +56,8 @@ internal class PropertyActionCell: SOTableViewCell {
         super.init(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
         
         self.accessoryType = .disclosureIndicator
-        self.selectedBackgroundView = UIView()
         
-        self.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
+        self.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,7 +76,9 @@ internal class PropertyActionCell: SOTableViewCell {
     }
     
     override func applyTheme(_ theme: Theme) {
+        super.applyTheme(theme)
         self.textLabel?.textColor = theme.barButtonColor
+        self.imageView?.tintColor = theme.barButtonColor
         self.selectedBackgroundView?.backgroundColor = theme.tableCellBackgroundSelectedColor
     }
 }

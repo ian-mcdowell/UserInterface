@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ian McDowell. All rights reserved.
 //
 
-import TiltedTabView
+@_exported import TiltedTabView
 
 public protocol SOTiltedTabViewControllerDelegate: TiltedTabViewControllerDelegate {}
 public protocol SOTiltedTabViewControllerDataSource: TiltedTabViewControllerDataSource {}

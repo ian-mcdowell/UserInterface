@@ -60,8 +60,6 @@ internal class InternalPropertyCell: PropertyCell {
         self.textLabel?.numberOfLines = 1
         self.textLabel?.adjustsFontSizeToFitWidth = true
         self.textLabel?.minimumScaleFactor = 0.8
-        
-        self.selectedBackgroundView = UIView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -107,19 +105,11 @@ internal class InternalPropertyCell: PropertyCell {
         }
     }
     
-    override func applyTheme(_ theme: Theme) {
-        self.textLabel?.textColor = theme.tableCellTextColor
-        self.detailTextLabel?.textColor = theme.tableCellTextColor
-        self.selectedBackgroundView?.backgroundColor = theme.tableCellBackgroundSelectedColor
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         self.textLabel?.text = nil
         self.detailTextLabel?.text = nil
-        
-        self.textLabel?.textColor = UIColor.black
     }
 
 }

@@ -32,7 +32,7 @@ open class SOTableViewCell: UITableViewCell, Themeable {
             NotificationCenter.default.removeObserver(observer)
         }
     }
-
+    
     open func applyTheme(_ theme: Theme) {
         self.textLabel?.textColor = theme.tableCellTextColor
         self.detailTextLabel?.textColor = theme.tableCellSecondaryTextColor

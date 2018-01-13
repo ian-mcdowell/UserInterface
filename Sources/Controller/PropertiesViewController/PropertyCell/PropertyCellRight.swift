@@ -12,10 +12,5 @@ internal class PropertyCellRight: InternalPropertyCell {
     override class var style: UITableViewCellStyle {
         return .value1
     }
-    
-    override func applyTheme(_ theme: Theme) {
-        super.applyTheme(theme)
-        
-        self.detailTextLabel?.textColor = theme.tableCellSecondaryTextColor
-    }
+
 }

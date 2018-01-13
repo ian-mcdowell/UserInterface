@@ -88,6 +88,7 @@ internal class PropertyCellText: InternalPropertyCell {
     }
     
     override func applyTheme(_ theme: Theme) {
+        super.applyTheme(theme)
         textLabel?.textColor = theme.tableCellTextColor
         
         textField.textColor = theme.tableCellTextColor
