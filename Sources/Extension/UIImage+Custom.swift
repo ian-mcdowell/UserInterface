@@ -111,6 +111,7 @@ public extension UIImage {
 
         self.cachedAverage = color
 
+        bitmap.deallocate(bytes: 4, alignedTo: MemoryLayout<UInt8>.size)
         return color
     }
 }
