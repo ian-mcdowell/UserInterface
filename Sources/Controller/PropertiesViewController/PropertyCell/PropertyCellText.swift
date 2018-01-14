@@ -59,6 +59,8 @@ internal class PropertyCellText: InternalPropertyCell {
             
             self.setupTextFieldPlaceholderWithTextProperty(property, propertiesViewController)
         }
+        
+        self.selectionStyle = .none
     }
     
     func setupTextField() {

@@ -28,6 +28,9 @@ open class PropertyCell: SOTableViewCell {
     }
     
     open func setProperty(_ property: Property, section: PropertySection, propertiesViewController: PropertiesViewController) {
+        if section.selectionStyle == .none {
+            self.selectionStyle = .none
+        }
     }
 }
 
