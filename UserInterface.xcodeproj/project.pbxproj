@@ -169,6 +169,7 @@
 				3CB477581FF7915D00C6B265 /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		3CB476C91FF7876D00C6B265 /* Products */ = {
 			isa = PBXGroup;
