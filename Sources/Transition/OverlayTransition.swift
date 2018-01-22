@@ -10,6 +10,8 @@ import UIKit
 public enum OverlayTransitionDirection {
     case fromBottom
     case fromLeft
+    case fromRight
+    case fromTop
 }
 
 public class OverlayTransitionController: SOTransitionController {
@@ -76,6 +78,10 @@ private class OverlayTransition: UIPercentDrivenInteractiveTransition, UIViewCon
             dismissedFrame.origin.y = containerView.frame.height
         case .fromLeft:
             dismissedFrame.origin.x = -containerView.frame.width
+        case .fromRight:
+            dismissedFrame.origin.x = containerView.frame.width
+        case .fromTop:
+            dismissedFrame.origin.y = -containerView.frame.height
         }
         
         let initialFrame = isPresentation ? dismissedFrame : appearedFrame
@@ -140,6 +146,10 @@ private class OverlayPresentationController: UIPresentationController {
             presentedView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         case .fromLeft:
             presentedView?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        case .fromRight:
+            presentedView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        case .fromTop:
+            presentedView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         }
         
         presentedView?.layer.masksToBounds = true
@@ -211,6 +221,10 @@ private class OverlayPresentationController: UIPresentationController {
             topOffset = 75
         case .fromLeft:
             rightOffset = 83 // iphone x notch from right
+        case .fromRight:
+            leftOffset = 83
+        case .fromTop:
+            bottomOffset = 75
         }
         
         let width = parentSize.width - rightOffset - leftOffset
@@ -249,13 +263,17 @@ private class OverlayPresentationController: UIPresentationController {
         
         switch direction {
         case .fromBottom:
-            // Show from bottom of screen
-            presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
             presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) / 2
+            presentedViewFrame.origin.y = containerBounds.size.height - presentedViewFrame.size.height
         case .fromLeft:
-            // Show from left of screen
             presentedViewFrame.origin.x = 0
             presentedViewFrame.origin.y = (containerBounds.size.height - presentedViewFrame.size.height) / 2
+        case .fromRight:
+            presentedViewFrame.origin.x = containerBounds.size.width - presentedViewFrame.size.width
+            presentedViewFrame.origin.y = (containerBounds.size.height - presentedViewFrame.size.height) / 2
+        case .fromTop:
+            presentedViewFrame.origin.x = (containerBounds.size.width - presentedViewFrame.size.width) / 2
+            presentedViewFrame.origin.y = 0
         }
         
         return presentedViewFrame

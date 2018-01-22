@@ -61,9 +61,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         
         contentSizeObservation = tableView.observe(\.contentSize) { [weak self] (tableView, _) in
             guard let me = self else { return }
-            if me.popoverPresentationController != nil || me.navigationController?.popoverPresentationController != nil {
-                me.preferredContentSize = tableView.contentSize
-            }
+            me.preferredContentSize = tableView.contentSize
         }
     }
 

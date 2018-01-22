@@ -142,7 +142,10 @@ public class ProgressHUD {
                 let localizedAdditionalDescriptionObservation = progress.observe(\Progress.localizedAdditionalDescription, changeHandler: { progress, change in
                     self.detailText = progress.localizedAdditionalDescription
                 })
-                progressObservations = [percentObservation, indeterminateObservation, localizedDescriptionObservation, localizedAdditionalDescriptionObservation]
+                let isFinishedObservation = progress.observe(\Progress.isFinished, changeHandler: { progress, change in
+                    self.showsCancelButton = progress.isCancellable && !progress.isFinished
+                })
+                progressObservations = [percentObservation, indeterminateObservation, localizedDescriptionObservation, localizedAdditionalDescriptionObservation, isFinishedObservation]
             } else {
                 self.showsCancelButton = false
                 progressObservations = []

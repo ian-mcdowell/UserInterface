@@ -79,7 +79,7 @@ public class EmptyLabel {
             p.baselineAdjustment = .alignCenters
             p.textAlignment = .center
             p.numberOfLines = 0
-            p.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.light)
+            p.font = UIFont.preferredFont(forTextStyle: .title2)
             p.adjustsFontSizeToFitWidth = true
             p.text = self.text
             p.textColor = self.textColor

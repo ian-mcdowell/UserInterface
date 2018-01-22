@@ -57,7 +57,7 @@ internal class PropertyActionCell: SOTableViewCell {
         
         self.accessoryType = .disclosureIndicator
         
-        self.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        self.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
     }
     
     required init?(coder aDecoder: NSCoder) {
