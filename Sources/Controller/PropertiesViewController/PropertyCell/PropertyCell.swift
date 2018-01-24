@@ -77,6 +77,8 @@ internal class InternalPropertyCell: PropertyCell {
         self.textLabel?.text = property.name
         self.detailTextLabel?.text = property.value
         
+        self.detailTextLabel?.numberOfLines = property.valueMaxLines
+        
         if property.dontScaleIcon {
             self.imageView?.image = property.icon
         } else {

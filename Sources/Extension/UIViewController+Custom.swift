@@ -45,7 +45,7 @@ extension UIViewController {
     }
     
     public func closeOrGoBack() {
-        if self.navigationController != nil {
+        if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
             self.goBack()
         } else {
             self.close()

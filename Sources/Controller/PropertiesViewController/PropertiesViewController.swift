@@ -440,6 +440,18 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    public func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        if indexPath.section < 0 || indexPath.section >= properties.count {
+            return
+        }
+        
+        let items = properties[indexPath.section].items
+        if indexPath.row < items.count, let accessoryAction = items[indexPath.row].accessoryAction {
+            accessoryAction.perform(from: self)
+        }
+    }
+    
 }
 
 

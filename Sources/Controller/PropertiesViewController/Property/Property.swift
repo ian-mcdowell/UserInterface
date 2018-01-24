@@ -27,11 +27,13 @@ public class Property {
     
     public let action: PropertyAction?
     public let editAction: PropertyAction?
+    public let accessoryAction: PropertyAction?
     public let icon: UIImage?
     public let rowActions: [UITableViewRowAction]?
     public let data: Any?
     public let style: PropertyStyle
     public let customAccessoryView: UIView?
+    public let valueMaxLines: Int
     public var dontScaleIcon: Bool = false
     
     public var selected: Bool {
@@ -49,22 +51,26 @@ public class Property {
         value: String? = nil,
         action: PropertyAction? = nil,
         editAction: PropertyAction? = nil,
+        accessoryAction: PropertyAction? = nil,
         icon: UIImage? = nil,
         selected: Bool = false,
         style: PropertyStyle = .right,
         rowActions: [UITableViewRowAction]? = nil,
         customAccessoryView: UIView? = nil,
+        valueMaxLines: Int = 1,
         data: Any? = nil
     ) {
         self.ID = ID
         self.name = name
         self.action = action
         self.editAction = editAction
+        self.accessoryAction = accessoryAction
         self.icon = icon
         self.rowActions = rowActions
         self.data = data
         self.style = style
         self.customAccessoryView = customAccessoryView
+        self.valueMaxLines = valueMaxLines
         
         self.selected = selected
         self.value = value

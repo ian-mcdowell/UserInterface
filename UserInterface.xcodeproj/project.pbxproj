@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C087085201739A3009D3252 /* FeatureRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C087084201739A3009D3252 /* FeatureRequestsViewController.swift */; };
+		3C2695602018561900240735 /* FeatureRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C26955F2018561900240735 /* FeatureRequestViewController.swift */; };
+		3C26956520185D3D00240735 /* UIView+GestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C26956420185D3D00240735 /* UIView+GestureRecognizer.swift */; };
 		3CB476D21FF7876D00C6B265 /* UserInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB476C81FF7876D00C6B265 /* UserInterface.framework */; };
 		3CB476D71FF7876D00C6B265 /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB476D61FF7876D00C6B265 /* InterfaceTests.swift */; };
 		3CB476D91FF7876D00C6B265 /* UserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB476CB1FF7876D00C6B265 /* UserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +82,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C087084201739A3009D3252 /* FeatureRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestsViewController.swift; sourceTree = "<group>"; };
+		3C26955F2018561900240735 /* FeatureRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureRequestViewController.swift; sourceTree = "<group>"; };
+		3C26956420185D3D00240735 /* UIView+GestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+GestureRecognizer.swift"; sourceTree = "<group>"; };
 		3CB476C81FF7876D00C6B265 /* UserInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UserInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CB476CB1FF7876D00C6B265 /* UserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInterface.h; sourceTree = "<group>"; };
 		3CB476CC1FF7876D00C6B265 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,6 +164,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C08708320173991009D3252 /* Feature Requests */ = {
+			isa = PBXGroup;
+			children = (
+				3C087084201739A3009D3252 /* FeatureRequestsViewController.swift */,
+				3C26955F2018561900240735 /* FeatureRequestViewController.swift */,
+			);
+			path = "Feature Requests";
+			sourceTree = "<group>";
+		};
 		3CB476BE1FF7876D00C6B265 = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +259,7 @@
 				3CB476F41FF787DD00C6B265 /* UIViewController+ProgressHUD.swift */,
 				3CB476F51FF787DD00C6B265 /* UIViewController+CheckDeallocation.swift */,
 				3CB476F61FF787DD00C6B265 /* UITableView+Custom.swift */,
+				3C26956420185D3D00240735 /* UIView+GestureRecognizer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -251,6 +267,7 @@
 		3CB476F81FF787DD00C6B265 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3C08708320173991009D3252 /* Feature Requests */,
 				3CB476F91FF787DD00C6B265 /* SOTableViewController.swift */,
 				3CB476FA1FF787DD00C6B265 /* DraggableSplitViewController.swift */,
 				3CB476FB1FF787DD00C6B265 /* TabViewController.swift */,
@@ -496,6 +513,7 @@
 				3CB477371FF787DD00C6B265 /* SONavigationController.swift in Sources */,
 				3CB4772E1FF787DD00C6B265 /* UIViewController+Custom.swift in Sources */,
 				3CB4774D1FF787DD00C6B265 /* SORoundedButtonCell.swift in Sources */,
+				3C087085201739A3009D3252 /* FeatureRequestsViewController.swift in Sources */,
 				3CB4774B1FF787DD00C6B265 /* SOBorderedActionButton.swift in Sources */,
 				3CB4772A1FF787DD00C6B265 /* UIView+Custom.swift in Sources */,
 				3CB4772D1FF787DD00C6B265 /* UICollectionView+Custom.swift in Sources */,
@@ -508,11 +526,13 @@
 				3CB477441FF787DD00C6B265 /* PropertyCellToggle.swift in Sources */,
 				3CB477291FF787DD00C6B265 /* UIBarButtonItem+Custom.swift in Sources */,
 				3CB477551FF787DD00C6B265 /* SOAlertView.swift in Sources */,
+				3C2695602018561900240735 /* FeatureRequestViewController.swift in Sources */,
 				3CB477381FF787DD00C6B265 /* SOViewController.swift in Sources */,
 				3CB477341FF787DD00C6B265 /* SOTableViewController.swift in Sources */,
 				3CB477531FF787DD00C6B265 /* SOCollectionViewCell.swift in Sources */,
 				3CB477411FF787DD00C6B265 /* PropertyAction.swift in Sources */,
 				3CB477391FF787DD00C6B265 /* AcknowledgementsViewController.swift in Sources */,
+				3C26956520185D3D00240735 /* UIView+GestureRecognizer.swift in Sources */,
 				3CB4774A1FF787DD00C6B265 /* PropertiesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
