@@ -17,6 +17,8 @@ class FeatureRequestViewController: PropertiesViewController {
         self.baseURL = baseURL
         self.deviceID = deviceID
         super.init()
+        
+        self.automaticallyAdjustsPreferredContentSize = false
     }
     
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }

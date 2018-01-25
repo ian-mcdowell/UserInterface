@@ -11,6 +11,7 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
 
     public var tableView: UITableView
     public var emptyView: UILabel
+    public var automaticallyAdjustsPreferredContentSize: Bool = true
 
     private var loadingView: UIView
     private var loadingIndicator: UIActivityIndicatorView
@@ -58,11 +59,6 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         emptyView.numberOfLines = 0
         emptyView.textAlignment = .center
         emptyView.text = emptyString()
-        
-        contentSizeObservation = tableView.observe(\.contentSize) { [weak self] (tableView, _) in
-            guard let me = self else { return }
-            me.preferredContentSize = tableView.contentSize
-        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -100,6 +96,14 @@ open class PropertiesViewController: SOViewController, UITableViewDataSource, UI
         loadingIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
         
         self.loading = true
+        
+        contentSizeObservation = tableView.observe(\.contentSize) { [weak self] (tableView, _) in
+            guard let me = self else { return }
+            let contentSize = tableView.contentSize
+            if me.automaticallyAdjustsPreferredContentSize && self?.popoverPresentationController != nil && contentSize.height > 0 && contentSize.width > 0 {
+                me.preferredContentSize = contentSize
+            }
+        }
     }
 
     open override func applyTheme(_ theme: Theme) {

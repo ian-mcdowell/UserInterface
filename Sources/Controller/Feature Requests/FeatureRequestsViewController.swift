@@ -29,6 +29,7 @@ public class FeatureRequestsViewController: PropertiesViewController {
         
         self.title = "Request a Feature"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(compose))
+        self.automaticallyAdjustsPreferredContentSize = false
     }
     
     public required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -67,6 +68,9 @@ public class FeatureRequestsViewController: PropertiesViewController {
     @objc private func compose() {
         let requestVC = FeatureRequestViewController(baseURL: self.baseURL, deviceID: self.deviceID)
         let nav = SONavigationController(rootViewController: requestVC)
+        if let ourNav = self.navigationController {
+            nav.modalPresentationStyle = ourNav.modalPresentationStyle
+        }
         self.present(nav, animated: true, completion: nil)
     }
     
