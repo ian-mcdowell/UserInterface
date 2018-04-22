@@ -88,7 +88,7 @@ public extension UIImage {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
         let totalBytes = 4 // Bytes requires to hold 1x1 image returned from Area Average filter
-        let bitmap = UnsafeMutableRawPointer.allocate(bytes: 4, alignedTo: MemoryLayout<UInt8>.size)
+        let bitmap = UnsafeMutableRawPointer.allocate(byteCount: 4, alignment: MemoryLayout<UInt8>.size)
 
         let averageImageFilter = CIFilter(name: "CIAreaAverage", withInputParameters: [kCIInputImageKey: ciImage])!
 
@@ -111,7 +111,7 @@ public extension UIImage {
 
         self.cachedAverage = color
 
-        bitmap.deallocate(bytes: 4, alignedTo: MemoryLayout<UInt8>.size)
+        bitmap.deallocate()
         return color
     }
 }

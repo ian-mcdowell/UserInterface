@@ -23,7 +23,8 @@ public class TapGestureRecognizer: UITapGestureRecognizer {
     init(action: @escaping () -> Void) {
         self.action = action
         
-        super.init(target: self, action: #selector(recognizerAction))
+        super.init(target: nil, action: nil)
+        self.addTarget(self, action: #selector(recognizerAction))
     }
     
     @objc private func recognizerAction() {

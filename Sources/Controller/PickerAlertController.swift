@@ -140,7 +140,7 @@ private class PickerViewController<T: Equatable>: PickerBaseViewController<T>, U
             self.pickerAlertController?.name(forItem: items[row]),
             self.pickerAlertController?.subtitle(forItem: items[row])
         ]
-        return components.flatMap({ $0 }).joined(separator: " - ")
+        return components.compactMap({ $0 }).joined(separator: " - ")
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

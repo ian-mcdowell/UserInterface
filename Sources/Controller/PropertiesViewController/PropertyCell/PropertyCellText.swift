@@ -74,7 +74,7 @@ internal class PropertyCellText: InternalPropertyCell {
         textField.attributedPlaceholder = NSAttributedString(
             string: property.name,
             attributes: [
-                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .black
+                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .lightGray
             ]
         )
         
@@ -125,7 +125,7 @@ internal class PropertyCellTextWithLabel: PropertyCellText {
         textField.attributedPlaceholder = NSAttributedString(
             string: property.placeholder ?? "",
             attributes: [
-                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .black
+                NSAttributedStringKey.foregroundColor: Theme.current?.placeholderTextColor ?? .lightGray
             ]
         )
         
