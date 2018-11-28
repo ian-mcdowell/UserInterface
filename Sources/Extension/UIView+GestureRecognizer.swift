@@ -26,7 +26,9 @@ public class TapGestureRecognizer: UITapGestureRecognizer {
         super.init(target: nil, action: nil)
         self.addTarget(self, action: #selector(recognizerAction))
     }
-    
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     @objc private func recognizerAction() {
         action?()
     }

@@ -697,13 +697,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(CONFIGURATION_BUILD_DIR)/ibuild",
+					"$(CONFIGURATION_BUILD_DIR)/ibuild/Products",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/swiftmodules";
+				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/Products/swiftmodules";
 			};
 			name = Debug;
 		};
@@ -720,13 +720,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(CONFIGURATION_BUILD_DIR)/ibuild",
+					"$(CONFIGURATION_BUILD_DIR)/ibuild/Products",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.ianmcdowell.UserInterface;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/swiftmodules";
+				SWIFT_INCLUDE_PATHS = "$(CONFIGURATION_BUILD_DIR)/ibuild/Products/swiftmodules";
 			};
 			name = Release;
 		};
